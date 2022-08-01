@@ -1,0 +1,88 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "theater",
+        "name": "Teatro di Villa Aldrovandi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.369948387145996,
+          44.46937748011179
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "theater",
+        "name": "Teatro Europa"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.363210678100586,
+          44.5113804877569
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "theater",
+        "name": "Teatro Duse"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.348447799682617,
+          44.488622408371114
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "theater",
+        "name": "Teatro Arena Del Sole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.34364128112793,
+          44.49979594473149
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "theater",
+        "name": "Teatro Testoni"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.346001625061035,
+          44.50812113310719
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+      "type": "theater",
+        "name": "Teatro Delle Celebrazioni"},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.312828063964844,
+          44.489219404857
+        ]
+      }
+    }
+  ]
+}

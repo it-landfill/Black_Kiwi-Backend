@@ -1,0 +1,73 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "department",
+        "name": "Dip di Ingegneria Lazzaretto"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.320724487304686,
+          44.51254340585983
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "department",
+        "name": "Dip di Ingegneria"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.329221725463867,
+          44.48836217722139
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "department",
+        "name": "Dip di Informatica"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.356172561645508,
+          44.4977297671644
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "department",
+        "name": "Dip di Storia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.34838342666626,
+          44.490398072284904
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"type": "department",
+        "name": "Policlinico universitario S. Orsola"},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.359434127807617,
+          44.49153079516007
+        ]
+      }
+    }
+  ]
+}

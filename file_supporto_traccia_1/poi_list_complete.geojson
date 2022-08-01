@@ -1,0 +1,377 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "department",
+		  "name": "Dip di Ingegneria Lazzaretto"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.320724487304686,
+			44.51254340585983
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "department",
+		  "name": "Dip di Ingegneria"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.329221725463867,
+			44.48836217722139
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "department",
+		  "name": "Dip di Informatica"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.356172561645508,
+			44.4977297671644
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "department",
+		  "name": "Dip di Storia"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.34838342666626,
+			44.490398072284904
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {"type": "department",
+		  "name": "Policlinico universitario S. Orsola"},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.359434127807617,
+			44.49153079516007
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "historical building",
+		  "name": "Palazzo Re Enzo"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.343083381652832,
+			44.49433189374523
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "historical building",
+		  "name": "Chiesa di Santo Stefano"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.34913444519043,
+			44.491607329696045
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "historical building",
+		  "name": "Santuario di San Luca"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.297721862792969,
+			44.47960548767628
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": { 
+		  "type": "historical building",
+		  "name": "Palazzo Poggi"},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.352481842041016,
+			44.49662777585759
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "museum",
+		  "name": "Museo di Ustica"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.35037899017334,
+			44.5131707599374
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "museum",
+		  "name": "Museo Medievale"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.341838836669922,
+			44.49613799525846
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "museum",
+		  "name": "MAMBO"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.336560249328613,
+			44.502076307564394
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "museum",
+		  "name": "Museo della Tappezzeria"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.314973831176758,
+			44.48771924822692
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		"type": "museum",
+		  "name": "Casa Museo Carducci"},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.357331275939941,
+			44.487841711438904
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "park",
+		  "name": "Giardini Margherita"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.353597640991211,
+			44.482177518841205
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "park",
+		  "name": "Villa Angeletti"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.332569122314453,
+			44.51180893396823
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "park",
+		  "name": "Arena Parco Nord"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.368961334228516,
+			44.52288623521493
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "park",
+		  "name": "Parco Della Montagnola"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.346559524536133,
+			44.50274968624234
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "park",
+		  "name": "Parco Villa Ghigi"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.327805519104004,
+			44.476818992627955
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "park",
+		  "name": "Parco Talon"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.297851333618164,
+			44.46674363106506
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		 "type": "park",
+		  "name": "Parco dei Cedri"},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.397843360900879,
+			44.47028092421102
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "theater",
+		  "name": "Teatro di Villa Aldrovandi"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.369948387145996,
+			44.46937748011179
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "theater",
+		  "name": "Teatro Europa"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.363210678100586,
+			44.5113804877569
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "theater",
+		  "name": "Teatro Duse"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.348447799682617,
+			44.488622408371114
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "theater",
+		  "name": "Teatro Arena Del Sole"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.34364128112793,
+			44.49979594473149
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		  "type": "theater",
+		  "name": "Teatro Testoni"
+		},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.346001625061035,
+			44.50812113310719
+		  ]
+		}
+	  },
+	  {
+		"type": "Feature",
+		"properties": {
+		"type": "theater",
+		  "name": "Teatro Delle Celebrazioni"},
+		"geometry": {
+		  "type": "Point",
+		  "coordinates": [
+			11.312828063964844,
+			44.489219404857
+		  ]
+		}
+	  }
+	]
+  }

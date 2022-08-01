@@ -1,0 +1,74 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "museum",
+        "name": "Museo di Ustica"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.35037899017334,
+          44.5131707599374
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "museum",
+        "name": "Museo Medievale"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.341838836669922,
+          44.49613799525846
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "museum",
+        "name": "MAMBO"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.336560249328613,
+          44.502076307564394
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "museum",
+        "name": "Museo della Tappezzeria"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.314973831176758,
+          44.48771924822692
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+      "type": "museum",
+        "name": "Casa Museo Carducci"},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.357331275939941,
+          44.487841711438904
+        ]
+      }
+    }
+  ]
+}

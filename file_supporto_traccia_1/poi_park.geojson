@@ -1,0 +1,102 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "park",
+        "name": "Giardini Margherita"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.353597640991211,
+          44.482177518841205
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "park",
+        "name": "Villa Angeletti"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.332569122314453,
+          44.51180893396823
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "park",
+        "name": "Arena Parco Nord"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.368961334228516,
+          44.52288623521493
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "park",
+        "name": "Parco Della Montagnola"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.346559524536133,
+          44.50274968624234
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "park",
+        "name": "Parco Villa Ghigi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.327805519104004,
+          44.476818992627955
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "park",
+        "name": "Parco Talon"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.297851333618164,
+          44.46674363106506
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+       "type": "park",
+        "name": "Parco dei Cedri"},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.397843360900879,
+          44.47028092421102
+        ]
+      }
+    }
+  ]
+}
