@@ -1,4 +1,4 @@
-package black_kiwi_default
+package black_kiwi_mobile
 
 import (
 	"net/http"
@@ -10,7 +10,7 @@ import (
 )
 
 // getAlbums responds with the list of all albums as JSON.
-func GetPOI(c *gin.Context) {
+func GetRecommendation(c *gin.Context) {
     id, err := strconv.ParseInt(c.Param("id"),10,0)
 
 	if err != nil {

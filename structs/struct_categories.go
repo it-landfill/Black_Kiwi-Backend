@@ -1,4 +1,4 @@
-package black_kiwi
+package black_kiwi_structs
 
 type Categories string
 

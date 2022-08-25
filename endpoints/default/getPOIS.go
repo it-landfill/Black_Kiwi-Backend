@@ -1,4 +1,4 @@
-package black_kiwi
+package black_kiwi_default
 
 import (
     "net/http"
@@ -8,5 +8,5 @@ import (
 )
 
 func GetPOIS(c *gin.Context) {
-    c.IndentedJSON(http.StatusOK, black_kiwi.MockPOIS)
+    c.IndentedJSON(http.StatusOK, black_kiwi_structs.MockPOIS)
 }
