@@ -2,6 +2,7 @@ package main
 
 import (
     "github.com/gin-gonic/gin"
+	
 	"ITLandfill/Black-Kiwi/endpoints/default"
 	"ITLandfill/Black-Kiwi/endpoints/admin"
 	"ITLandfill/Black-Kiwi/endpoints/mobile"
@@ -16,13 +17,11 @@ func main() {
 
 	// Admin
 	router.GET("/getRequestLocations", black_kiwi_admin.GetRequestLocations)
+    router.GET("/getQuartieri", black_kiwi_admin.GetQuartieri)
 	
 	// Mobile
 	router.GET("/getRecommendation", black_kiwi_mobile.GetRecommendation)
 
-	//TODO: pos utenti
-	//TODO: 
- 
 
     router.Run("localhost:8080")
 }

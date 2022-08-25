@@ -2,28 +2,29 @@ package black_kiwi_mobile
 
 import (
 	"net/http"
-	"strconv"
 
 	"ITLandfill/Black-Kiwi/structs"
 
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 // getAlbums responds with the list of all albums as JSON.
 func GetRecommendation(c *gin.Context) {
-    id, err := strconv.ParseInt(c.Param("id"),10,0)
+    
+	category := black_kiwi_structs.Categories(c.Query("category"))
+	minRank := c.DefaultQuery("minRank", "0")
+	limit := c.DefaultQuery("limit", "5")
+	latitude := c.Query("latitude")
+	longitude := c.Query("longitude")
 
-	if err != nil {
-		println("Oh shit")
-	}
+	log.WithFields(log.Fields{
+		"category": category,
+		"minRank":   minRank,
+		"limit": limit,
+		"latitude": latitude,
+		"longitude": longitude,
+	  }).Info("New POI reccomendation requested")
 
-    // Loop over the list of albums, looking for
-    // an album whose ID value matches the parameter.
-    for _, a := range black_kiwi_structs.MockPOIS {
-        if int64(a.Id) == id {
-            c.IndentedJSON(http.StatusOK, a)
-            return
-        }
-    }
-    c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
+    c.IndentedJSON(http.StatusOK, black_kiwi_structs.MockPOIS[0:2])
 }
