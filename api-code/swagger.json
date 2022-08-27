@@ -72,7 +72,7 @@
         }
       }
     },
-    "/POIRecommend" : {
+    "/getRecommendation" : {
       "get" : {
         "tags" : [ "mobile" ],
         "summary" : "Request for a list of POI with specified category and minRank",
