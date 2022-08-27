@@ -1,0 +1,427 @@
+{
+  "openapi" : "3.0.0",
+  "servers" : [ {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/ITLandfill/Black-Kiwi/1.0.1"
+  } ],
+  "info" : {
+    "description" : "API used for the Context Aware System course @ Università degli studi di Bologna a.a. 2021/2022.\nITLandfill group\n",
+    "version" : "1.0.1",
+    "title" : "Black-Kiwi API",
+    "contact" : {
+      "email" : "alessandro.benetton@studio.unibo.it",
+      "name" : "Alessandro Benetton",
+      "url" : "https://github.com/it-landfill/black_kiwi-Backend"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags" : [ {
+    "name" : "administration",
+    "description" : "VUE frontend for service mantainers"
+  }, {
+    "name" : "mobile",
+    "description" : "iOS application for users"
+  } ],
+  "paths" : {
+    "/login" : {
+      "post" : {
+        "summary" : "Authenticate the user",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "username",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "description" : "The username or mail address of the user\n"
+        }, {
+          "in" : "query",
+          "name" : "password",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "description" : "The user password encoded with [TODO: INSERIRE ALGORITMO\nCRITTOGRAFIA PW]\n"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "authentication succeded",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LoginSuccess"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "404" : {
+            "description" : "A user with the specified ID was not found."
+          },
+          "429" : {
+            "description" : "Too Many Requests."
+          }
+        }
+      }
+    },
+    "/getRecommendation" : {
+      "get" : {
+        "tags" : [ "mobile" ],
+        "summary" : "Request for a list of POI with specified category and minRank",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "category",
+          "schema" : {
+            "$ref" : "#/components/schemas/Categories"
+          }
+        }, {
+          "in" : "query",
+          "name" : "minRank",
+          "schema" : {
+            "type" : "number",
+            "example" : 0
+          }
+        }, {
+          "in" : "query",
+          "name" : "limit",
+          "schema" : {
+            "type" : "number",
+            "example" : 5
+          },
+          "description" : "Number of results to return"
+        }, {
+          "in" : "query",
+          "name" : "latitude",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "11.343083381652832"
+          }
+        }, {
+          "in" : "query",
+          "name" : "longitude",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "44.49433189374523"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Query succeded",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/POI_Item"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "429" : {
+            "description" : "Too Many Requests."
+          }
+        }
+      }
+    },
+    "/getPOIS" : {
+      "get" : {
+        "summary" : "Get all POI",
+        "responses" : {
+          "200" : {
+            "description" : "List of all POI",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/POI_Item"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "429" : {
+            "description" : "Too Many Requests."
+          }
+        }
+      }
+    },
+    "/newPOI" : {
+      "post" : {
+        "tags" : [ "administration" ],
+        "summary" : "Add a POI to the database",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/New_POI_Item"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The generated POI",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/POI_Item"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "429" : {
+            "description" : "Too Many Requests."
+          }
+        }
+      }
+    },
+    "/getRequestLocations" : {
+      "get" : {
+        "summary" : "Return the location of the requests",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "from",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "in" : "query",
+          "name" : "to",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of all request locations",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/RequestInfo"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "429" : {
+            "description" : "Too Many Requests."
+          }
+        },
+        "tags" : [ "administration" ]
+      }
+    },
+    "/getPOIQuartieri" : {
+      "get" : {
+        "summary" : "Return POI distribution based on quartieri.",
+        "responses" : {
+          "200" : {
+            "description" : "Count of the POI divided by quartiere",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/QuartiereInfo"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "429" : {
+            "description" : "Too Many Requests."
+          }
+        },
+        "tags" : [ "administration" ]
+      }
+    },
+    "/getCheckinQuartieri" : {
+      "get" : {
+        "summary" : "Return checkin distribution based on quartieri.",
+        "responses" : {
+          "200" : {
+            "description" : "Count of all logins divided by quartiere",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/QuartiereInfo"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "429" : {
+            "description" : "Too Many Requests."
+          }
+        },
+        "tags" : [ "administration" ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "POI_Item" : {
+        "type" : "object",
+        "required" : [ "id", "name", "category", "rank", "coord" ],
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 0
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Museo Medievale"
+          },
+          "category" : {
+            "$ref" : "#/components/schemas/Categories"
+          },
+          "rank" : {
+            "type" : "number",
+            "example" : 10.2
+          },
+          "coord" : {
+            "$ref" : "#/components/schemas/Coordinates"
+          }
+        }
+      },
+      "New_POI_Item" : {
+        "type" : "object",
+        "required" : [ "name", "category", "coord" ],
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "example" : "Museo Medievale"
+          },
+          "category" : {
+            "$ref" : "#/components/schemas/Categories"
+          },
+          "coord" : {
+            "$ref" : "#/components/schemas/Coordinates"
+          }
+        }
+      },
+      "Coordinates" : {
+        "type" : "object",
+        "required" : [ "latitude", "longitude" ],
+        "properties" : {
+          "latitude" : {
+            "type" : "string",
+            "example" : "11.343083381652832"
+          },
+          "longitude" : {
+            "type" : "string",
+            "example" : "44.49433189374523"
+          }
+        }
+      },
+      "LoginSuccess" : {
+        "type" : "object",
+        "required" : [ "username", "password" ],
+        "properties" : {
+          "username" : {
+            "type" : "string",
+            "example" : "MarioRossi"
+          },
+          "role" : {
+            "type" : "string",
+            "enum" : [ "user", "admin" ],
+            "example" : "user"
+          }
+        }
+      },
+      "RequestInfo" : {
+        "type" : "object",
+        "required" : [ "name", "category", "coord" ],
+        "properties" : {
+          "category" : {
+            "$ref" : "#/components/schemas/Categories"
+          },
+          "coord" : {
+            "$ref" : "#/components/schemas/Coordinates"
+          },
+          "minRank" : {
+            "type" : "number"
+          },
+          "timestamp" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "Categories" : {
+        "type" : "string",
+        "enum" : [ "department", "historical building", "museum", "park", "theater" ],
+        "example" : "department"
+      },
+      "QuartiereInfo" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "density" : {
+            "type" : "number",
+            "example" : 15
+          },
+          "geom" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}
