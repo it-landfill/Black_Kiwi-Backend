@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// getAlbums responds with the list of all albums as JSON.
+
 func GetPOI(c *gin.Context) {
     id, err := strconv.ParseInt(c.Param("id"),10,0)
 
@@ -17,13 +17,12 @@ func GetPOI(c *gin.Context) {
 		println("Oh shit")
 	}
 
-    // Loop over the list of albums, looking for
-    // an album whose ID value matches the parameter.
+
     for _, a := range black_kiwi_structs.MockPOIS {
         if int64(a.Id) == id {
             c.IndentedJSON(http.StatusOK, a)
             return
         }
     }
-    c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
+    c.IndentedJSON(http.StatusNotFound, gin.H{"message": "POI not found"})
 }

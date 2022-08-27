@@ -9,7 +9,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// getAlbums responds with the list of all albums as JSON.
+
 func GetRecommendation(c *gin.Context) {
     
 	category := black_kiwi_structs.Categories(c.Query("category"))
