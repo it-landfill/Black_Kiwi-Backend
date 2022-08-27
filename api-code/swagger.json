@@ -262,7 +262,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/QuartierePOIInfo"
+                    "$ref" : "#/components/schemas/QuartiereInfo"
                   }
                 }
               }
