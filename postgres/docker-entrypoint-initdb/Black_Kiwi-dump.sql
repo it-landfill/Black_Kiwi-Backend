@@ -483,14 +483,16 @@ ALTER TABLE ONLY "black-kiwi_data".requests
 -- Name: DATABASE "black-kiwi"; Type: ACL; Schema: -; Owner: postgresAdmin
 --
 
-CREATE USER "black-kiwi_login" WITH PASSWORD '6whuUYT#E&hy@A2#';
-CREATE USER "black-kiwi_query" WITH PASSWORD '6whuUYT#E&hy@A2#';
+CREATE USER "black-kiwi_login" WITH PASSWORD 'vwWTR7sFRw9sh9KA';
+CREATE USER "black-kiwi_query" WITH PASSWORD '4ksZPHdEAHyaY6Ma';
 
 GRANT USAGE ON SCHEMA "black-kiwi_authentication" TO "black-kiwi_login";
-GRANT SELECT, INSERT, UPDATE, DELETE  ON ALL TABLES IN SCHEMA  "black-kiwi_authentication" TO "black-kiwi_login";
+GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA "black-kiwi_authentication" TO "black-kiwi_login";
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA "black-kiwi_authentication" TO "black-kiwi_login";
 
 GRANT USAGE ON SCHEMA "black-kiwi_data" TO "black-kiwi_query";
-GRANT SELECT, INSERT, UPDATE, DELETE  ON ALL TABLES IN SCHEMA  "black-kiwi_data" TO "black-kiwi_query";
+GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA "black-kiwi_data" TO "black-kiwi_query";
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA "black-kiwi_data" TO "black-kiwi_query";
 
 --
 -- PostgreSQL database dump complete

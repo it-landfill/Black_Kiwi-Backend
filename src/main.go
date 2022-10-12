@@ -25,5 +25,5 @@ func main() {
 	router.GET("/getRecommendation", black_kiwi_mobile.GetRecommendation)
 
 
-    router.Run("localhost:8080")
+    router.Run("0.0.0.0:8080")
 }
