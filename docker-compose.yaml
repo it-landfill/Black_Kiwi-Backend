@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:11.6
+    restart: on-failure
+    ports:
+      - 5432:5432
+    volumes:
+      - /share/Container/postgresdb:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=qnap_postgres
+      - POSTGRES_PASSWORD=qnap_postgres

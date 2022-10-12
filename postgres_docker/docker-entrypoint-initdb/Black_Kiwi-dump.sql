@@ -6,18 +6,11 @@
 -- Dumped by pg_dump version 14.4
 
 
-CREATE USER black_kiwi_administrator WITH PASSWORD '6whuUYT#E&hy@A2#';
-
-
 --
 -- Name: black-kiwi_authentication; Type: SCHEMA; Schema: -; Owner: black_kiwi_administrator
 --
 
 CREATE SCHEMA "black-kiwi_authentication";
-
-
-ALTER SCHEMA "black-kiwi_authentication" OWNER TO black_kiwi_administrator;
-
 --
 -- Name: roles; Type: TABLE; Schema: black-kiwi_authentication; Owner: black_kiwi_administrator
 --
@@ -26,9 +19,6 @@ CREATE TABLE "black-kiwi_authentication".roles (
     id integer NOT NULL,
     name character varying(5) NOT NULL
 );
-
-
-ALTER TABLE "black-kiwi_authentication".roles OWNER TO black_kiwi_administrator;
 
 --
 -- Name: roles_id_seq; Type: SEQUENCE; Schema: black-kiwi_authentication; Owner: black_kiwi_administrator
@@ -41,9 +31,6 @@ CREATE SEQUENCE "black-kiwi_authentication".roles_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
-ALTER TABLE "black-kiwi_authentication".roles_id_seq OWNER TO black_kiwi_administrator;
 
 --
 -- Name: roles_id_seq; Type: SEQUENCE OWNED BY; Schema: black-kiwi_authentication; Owner: black_kiwi_administrator
@@ -63,9 +50,6 @@ CREATE TABLE "black-kiwi_authentication".users (
     role integer NOT NULL
 );
 
-
-ALTER TABLE "black-kiwi_authentication".users OWNER TO black_kiwi_administrator;
-
 --
 -- Name: table_name_id_seq; Type: SEQUENCE; Schema: black-kiwi_authentication; Owner: black_kiwi_administrator
 --
@@ -77,9 +61,6 @@ CREATE SEQUENCE "black-kiwi_authentication".table_name_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
-ALTER TABLE "black-kiwi_authentication".table_name_id_seq OWNER TO black_kiwi_administrator;
 
 --
 -- Name: table_name_id_seq; Type: SEQUENCE OWNED BY; Schema: black-kiwi_authentication; Owner: black_kiwi_administrator
@@ -187,9 +168,6 @@ ALTER TABLE ONLY "black-kiwi_authentication".users
 
 CREATE SCHEMA "black-kiwi_data";
 
-
-ALTER SCHEMA "black-kiwi_data" OWNER TO black_kiwi_administrator;
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -203,9 +181,6 @@ CREATE TABLE "black-kiwi_data".categories (
     id integer NOT NULL
 );
 
-
-ALTER TABLE "black-kiwi_data".categories OWNER TO black_kiwi_administrator;
-
 --
 -- Name: categories_id_seq; Type: SEQUENCE; Schema: black-kiwi_data; Owner: black_kiwi_administrator
 --
@@ -218,8 +193,6 @@ CREATE SEQUENCE "black-kiwi_data".categories_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE "black-kiwi_data".categories_id_seq OWNER TO black_kiwi_administrator;
 
 --
 -- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: black-kiwi_data; Owner: black_kiwi_administrator
@@ -240,9 +213,6 @@ CREATE TABLE "black-kiwi_data".poi_list (
     rank integer DEFAULT '-1'::integer NOT NULL
 );
 
-
-ALTER TABLE "black-kiwi_data".poi_list OWNER TO black_kiwi_administrator;
-
 --
 -- Name: poi_list_id_seq; Type: SEQUENCE; Schema: black-kiwi_data; Owner: black_kiwi_administrator
 --
@@ -254,9 +224,6 @@ CREATE SEQUENCE "black-kiwi_data".poi_list_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
-ALTER TABLE "black-kiwi_data".poi_list_id_seq OWNER TO black_kiwi_administrator;
 
 --
 -- Name: poi_list_id_seq; Type: SEQUENCE OWNED BY; Schema: black-kiwi_data; Owner: black_kiwi_administrator
@@ -279,9 +246,6 @@ CREATE TABLE "black-kiwi_data"."quartieri-bologna" (
     numquart integer
 );
 
-
-ALTER TABLE "black-kiwi_data"."quartieri-bologna" OWNER TO black_kiwi_administrator;
-
 --
 -- Name: quartieri-bologna_id_seq; Type: SEQUENCE; Schema: black-kiwi_data; Owner: black_kiwi_administrator
 --
@@ -294,8 +258,6 @@ CREATE SEQUENCE "black-kiwi_data"."quartieri-bologna_id_seq"
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE "black-kiwi_data"."quartieri-bologna_id_seq" OWNER TO black_kiwi_administrator;
 
 --
 -- Name: quartieri-bologna_id_seq; Type: SEQUENCE OWNED BY; Schema: black-kiwi_data; Owner: black_kiwi_administrator
@@ -317,8 +279,6 @@ CREATE TABLE "black-kiwi_data".requests (
 );
 
 
-ALTER TABLE "black-kiwi_data".requests OWNER TO black_kiwi_administrator;
-
 --
 -- Name: requests_id_seq; Type: SEQUENCE; Schema: black-kiwi_data; Owner: black_kiwi_administrator
 --
@@ -331,8 +291,6 @@ CREATE SEQUENCE "black-kiwi_data".requests_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE "black-kiwi_data".requests_id_seq OWNER TO black_kiwi_administrator;
 
 --
 -- Name: requests_id_seq; Type: SEQUENCE OWNED BY; Schema: black-kiwi_data; Owner: black_kiwi_administrator
@@ -513,7 +471,7 @@ ALTER TABLE ONLY "black-kiwi_data".poi_list
     ADD CONSTRAINT poi_list___fk_category FOREIGN KEY (category) REFERENCES "black-kiwi_data".categories(id);
 
 
---
+--321
 -- Name: requests requests___fk_category; Type: FK CONSTRAINT; Schema: black-kiwi_data; Owner: black_kiwi_administrator
 --
 
@@ -525,14 +483,14 @@ ALTER TABLE ONLY "black-kiwi_data".requests
 -- Name: DATABASE "black-kiwi"; Type: ACL; Schema: -; Owner: postgresAdmin
 --
 
-CREATE USER black_kiwi_login WITH PASSWORD '6whuUYT#E&hy@A2#';
-CREATE USER black_kiwi_query WITH PASSWORD '6whuUYT#E&hy@A2#';
+CREATE USER "black-kiwi_login" WITH PASSWORD '6whuUYT#E&hy@A2#';
+CREATE USER "black-kiwi_query" WITH PASSWORD '6whuUYT#E&hy@A2#';
 
-GRANT ALL ON ALL TABLES IN SCHEMA "black-kiwi_authentication" TO black_kiwi_login;
-GRANT ALL ON ALL TABLES IN SCHEMA "black-kiwi_data" TO black_kiwi_query;
+GRANT USAGE ON SCHEMA "black-kiwi_authentication" TO "black-kiwi_login";
+GRANT SELECT, INSERT, UPDATE, DELETE  ON ALL TABLES IN SCHEMA  "black-kiwi_authentication" TO "black-kiwi_login";
 
-GRANT ALL ON DATABASE "black-kiwi" TO black_kiwi_administrator;
-
+GRANT USAGE ON SCHEMA "black-kiwi_data" TO "black-kiwi_query";
+GRANT SELECT, INSERT, UPDATE, DELETE  ON ALL TABLES IN SCHEMA  "black-kiwi_data" TO "black-kiwi_query";
 
 --
 -- PostgreSQL database dump complete
