@@ -1,16 +1,16 @@
-FROM golang:1.19-alpine3.16
+FROM golang:1.19.2
 
+RUN mkdir -p /usr/src/goAPI
 WORKDIR /usr/src/goAPI
 
-COPY go.mod go.sum ./
+COPY src/go.mod src/go.sum ./
 RUN go mod download 
 RUN go mod verify
 
+COPY src/ ./
 
-COPY main.go ./
-COPY endpoints ./endpoints/
-COPY structs ./structs/
 RUN go build -v -o ./main
 
 CMD ["./main"]
 
+# docker build -t aleben/itlandfill-cas-go_api:1.0 .

@@ -1,13 +1,35 @@
 version: '3'
 
 services:
-  postgres:
-    image: postgres:11.6
+  postgis:
+    container_name: postgis
+    image: aleben/itlandfill-cas-postgis-preloaded:1.1
     restart: on-failure
-    ports:
-      - 5432:5432
+    networks:
+      - backend
     volumes:
-      - /share/Container/postgresdb:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=qnap_postgres
-      - POSTGRES_PASSWORD=qnap_postgres
+      - POSTGRES_USER=black-kiwi_administrator
+      - POSTGRES_PASSWORD=6whuUYT#E&hy@A2#
+      - POSTGRES_DB=black-kiwi
+  go_api:
+    container_name: go_api
+    image: aleben/itlandfill-cas-go_api:1.0
+    restart: on-failure
+    depends_on:
+      - postgis
+    ports:
+      - 62950:8080
+    networks:
+      - default
+      - backend
+
+networks:
+  backend:
+    name: black-kiwi-backend
+    internal: true
+  default:
+
+volumes:
+  postgres_data: 
