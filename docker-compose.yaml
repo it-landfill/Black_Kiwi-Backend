@@ -15,7 +15,7 @@ services:
       - POSTGRES_DB=black-kiwi
   go_api:
     container_name: go_api
-    image: aleben/itlandfill-cas-go_api:1.0
+    image: aleben/itlandfill-cas-go_api:1.1
     restart: on-failure
     depends_on:
       - postgis

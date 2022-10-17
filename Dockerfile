@@ -11,6 +11,9 @@ COPY src/ ./
 
 RUN go build -v -o ./main
 
+EXPOSE 8080
+
 CMD ["./main"]
 
-# docker build -t aleben/itlandfill-cas-go_api:1.0 .
+# docker build -t aleben/itlandfill-cas-go_api:1.1 .
+# docker push aleben/itlandfill-cas-go_api:1.1

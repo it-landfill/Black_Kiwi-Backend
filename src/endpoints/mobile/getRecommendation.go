@@ -12,8 +12,8 @@ import (
 
 func GetRecommendation(c *gin.Context) {
     
-	category := black_kiwi_structs.Categories(c.Query("category"))
-	minRank := c.DefaultQuery("minRank", "0")
+	category := black_kiwi_structs.Categories(c.DefaultQuery("category", ""))
+	minRank := c.Query("minRank")
 	limit := c.DefaultQuery("limit", "5")
 	latitude := c.Query("latitude")
 	longitude := c.Query("longitude")
