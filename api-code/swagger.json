@@ -6,7 +6,7 @@
   } ],
   "info" : {
     "description" : "API used for the Context Aware System course @ Università degli studi di Bologna a.a. 2021/2022.\nITLandfill group\n",
-    "version" : "1.0.1",
+    "version" : "1.0.2",
     "title" : "Black-Kiwi API",
     "contact" : {
       "email" : "alessandro.benetton@studio.unibo.it",
@@ -78,41 +78,45 @@
         "summary" : "Request for a list of POI with specified category and minRank",
         "parameters" : [ {
           "in" : "query",
-          "name" : "category",
-          "schema" : {
-            "$ref" : "#/components/schemas/Categories"
-          }
-        }, {
-          "in" : "query",
           "name" : "minRank",
+          "required" : true,
           "schema" : {
             "type" : "number",
-            "example" : 0
+            "format" : "float",
+            "example" : 0.2
           }
-        }, {
-          "in" : "query",
-          "name" : "limit",
-          "schema" : {
-            "type" : "number",
-            "example" : 5
-          },
-          "description" : "Number of results to return"
         }, {
           "in" : "query",
           "name" : "latitude",
           "required" : true,
           "schema" : {
-            "type" : "string",
-            "example" : "11.343083381652832"
+            "type" : "number",
+            "format" : "double",
+            "example" : 11.343083381652832
           }
         }, {
           "in" : "query",
           "name" : "longitude",
           "required" : true,
           "schema" : {
-            "type" : "string",
-            "example" : "44.49433189374523"
+            "type" : "number",
+            "format" : "double",
+            "example" : 44.49433189374523
           }
+        }, {
+          "in" : "query",
+          "name" : "category",
+          "schema" : {
+            "$ref" : "#/components/schemas/Categories"
+          }
+        }, {
+          "in" : "query",
+          "name" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "example" : 5
+          },
+          "description" : "Number of results to return"
         } ],
         "responses" : {
           "200" : {
@@ -331,6 +335,7 @@
           },
           "rank" : {
             "type" : "number",
+            "format" : "float",
             "example" : 10.2
           },
           "coord" : {
@@ -359,12 +364,14 @@
         "required" : [ "latitude", "longitude" ],
         "properties" : {
           "latitude" : {
-            "type" : "string",
-            "example" : "11.343083381652832"
+            "type" : "number",
+            "format" : "double",
+            "example" : 11.343083381652832
           },
           "longitude" : {
-            "type" : "string",
-            "example" : "44.49433189374523"
+            "type" : "number",
+            "format" : "double",
+            "example" : 44.49433189374523
           }
         }
       },
@@ -404,8 +411,8 @@
       },
       "Categories" : {
         "type" : "string",
-        "enum" : [ "department", "historical building", "museum", "park", "theater" ],
-        "example" : "department"
+        "enum" : [ "Department", "Historical Building", "Museum", "Park", "Theater" ],
+        "example" : "Department"
       },
       "QuartiereInfo" : {
         "type" : "object",
