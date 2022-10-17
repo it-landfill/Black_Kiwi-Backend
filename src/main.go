@@ -6,9 +6,16 @@ import (
 	"ITLandfill/Black-Kiwi/endpoints/admin"
 	"ITLandfill/Black-Kiwi/endpoints/default"
 	"ITLandfill/Black-Kiwi/endpoints/mobile"
+
+	"ITLandfill/Black-Kiwi/dbHandler/utils"
+	"ITLandfill/Black-Kiwi/dbHandler/handler"
 )
 
 func main() {
+	// Init DB connection
+	black_kiwi_db_utils.ConnPool = black_kiwi_db_handler.InitConnectionPool()
+	defer black_kiwi_db_utils.ConnPool.Close()
+
 	// Generate a new router
     router := gin.Default()
 
