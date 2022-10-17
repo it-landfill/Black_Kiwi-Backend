@@ -3,7 +3,7 @@ version: '3'
 services:
   postgis:
     container_name: postgis
-    image: aleben/itlandfill-cas-postgis-preloaded:1.1
+    image: aleben/itlandfill-cas-postgis-preloaded:1.2
     restart: on-failure
     networks:
       - backend
@@ -11,7 +11,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=black-kiwi_administrator
-      - POSTGRES_PASSWORD=6whuUYT#E&hy@A2#
+      - POSTGRES_PASSWORD=6whuUYTEhyA2ShR35
       - POSTGRES_DB=black-kiwi
   go_api:
     container_name: go_api

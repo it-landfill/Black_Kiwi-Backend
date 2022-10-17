@@ -331,11 +331,11 @@ ALTER TABLE ONLY "black-kiwi_data".requests ALTER COLUMN id SET DEFAULT nextval(
 -- Data for Name: categories; Type: TABLE DATA; Schema: black-kiwi_data; Owner: black_kiwi_administrator
 --
 
-INSERT INTO "black-kiwi_data".categories (name, id) VALUES ('department', 1);
-INSERT INTO "black-kiwi_data".categories (name, id) VALUES ('historical building', 2);
-INSERT INTO "black-kiwi_data".categories (name, id) VALUES ('museum', 3);
-INSERT INTO "black-kiwi_data".categories (name, id) VALUES ('park', 4);
-INSERT INTO "black-kiwi_data".categories (name, id) VALUES ('theater', 5);
+INSERT INTO "black-kiwi_data".categories (name, id) VALUES ('Department', 1);
+INSERT INTO "black-kiwi_data".categories (name, id) VALUES ('Historical Building', 2);
+INSERT INTO "black-kiwi_data".categories (name, id) VALUES ('Museum', 3);
+INSERT INTO "black-kiwi_data".categories (name, id) VALUES ('Park', 4);
+INSERT INTO "black-kiwi_data".categories (name, id) VALUES ('Theater', 5);
 
 
 --
