@@ -14,7 +14,7 @@ import (
 func GetRecommendation(c *gin.Context) {
     
 	category := c.DefaultQuery("category", "")
-	minRank, err := strconv.Atoi(c.Query("minRank"))
+	minRank, err := strconv.ParseFloat(c.Query("minRank"), 32)
 	if err != nil {
 		log.WithFields(log.Fields{"error":err,}).Error("Error while parsing limit in GetRecommendation")
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

@@ -2,7 +2,7 @@ package black_kiwi_db_utils
 
 import "encoding/json"
 
-func JSONtoCoordinates(jsonStr string) (lat float64, lon float64) {
+func JSONtoCoordinates(jsonStr string) (float64, float64) {
 	type jsonCoordinates struct {
 		Type string `json:"type"`
 		Coordinates []float64 `json:"coordinates"`

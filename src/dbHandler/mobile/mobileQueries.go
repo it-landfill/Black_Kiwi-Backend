@@ -18,7 +18,7 @@ JOIN "black-kiwi_data".categories as cat on poi.category = cat.id
 WHERE cat.name = 'park' and poi.rank<0
 ORDER BY meters;
 */
-func GetRecommendation(minRank int, lat float64, lon float64, category string, limit int) (poiList []black_kiwi_structs.PoiItem) {
+func GetRecommendation(minRank float64, lat float64, lon float64, category string, limit int) (poiList []black_kiwi_structs.PoiItem) {
 	queryStr := ""
 
 	queryStr += fmt.Sprintf("SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates, st_distance(poi.geom,st_geogfromtext('POINT(%f %f)')) as meters\n",lat, lon)
@@ -76,7 +76,7 @@ func GetRecommendation(minRank int, lat float64, lon float64, category string, l
 				cat = black_kiwi_structs.DEPARTMENT
 		}
 
-		tmpLat, tmpLon := black_kiwi_db_utils.JSONtoCoordinates(coordinates)
+		tmpLon, tmpLat := black_kiwi_db_utils.JSONtoCoordinates(coordinates)
 
 		poiItem := black_kiwi_structs.PoiItem{
 			Id: id,
