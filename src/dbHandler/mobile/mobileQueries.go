@@ -20,6 +20,7 @@ ORDER BY meters;
 */
 func GetRecommendation(minRank float64, lat float64, lon float64, category string, limit int) (poiList []black_kiwi_structs.PoiItem) {
 	queryStr := ""
+	poiList = []black_kiwi_structs.PoiItem{}
 
 	queryStr += fmt.Sprintf("SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates, st_distance(poi.geom,st_geogfromtext('POINT(%f %f)')) as meters\n",lat, lon)
 	queryStr += "FROM \"black-kiwi_data\".poi_list as poi\n"
