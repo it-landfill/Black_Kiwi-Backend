@@ -1,4 +1,4 @@
-package black_kiwi_structs
+package black_kiwi_data_structs
 
 type QuartiereInfo struct {
 	Name string `json:"name"`

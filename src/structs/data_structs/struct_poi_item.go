@@ -1,7 +1,6 @@
-package black_kiwi_structs
+package black_kiwi_data_structs
 
 type PoiItem struct {
-
 	Id int `json:"id"`
 
 	Name string `json:"name"`

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"ITLandfill/Black-Kiwi/structs"
-	"ITLandfill/Black-Kiwi/dbHandler/utils"
+	black_kiwi_db_utils "ITLandfill/Black-Kiwi/dbHandler/utils"
+	"ITLandfill/Black-Kiwi/structs/data_structs"
 )
 
 //https://app.swaggerhub.com/apis/ITLandfill/Black-Kiwi/1.0.2
@@ -18,11 +18,11 @@ JOIN "black-kiwi_data".categories as cat on poi.category = cat.id
 WHERE cat.name = 'park' and poi.rank<0
 ORDER BY meters;
 */
-func GetRecommendation(minRank float64, lat float64, lon float64, category string, limit int) (poiList []black_kiwi_structs.PoiItem) {
+func GetRecommendation(minRank float64, lat float64, lon float64, category string, limit int) (poiList []black_kiwi_data_structs.PoiItem) {
 	queryStr := ""
-	poiList = []black_kiwi_structs.PoiItem{}
+	poiList = []black_kiwi_data_structs.PoiItem{}
 
-	queryStr += fmt.Sprintf("SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates, st_distance(poi.geom,st_geogfromtext('POINT(%f %f)')) as meters\n",lat, lon)
+	queryStr += fmt.Sprintf("SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates, st_distance(poi.geom,st_geogfromtext('POINT(%f %f)')) as meters\n", lat, lon)
 	queryStr += "FROM \"black-kiwi_data\".poi_list as poi\n"
 	queryStr += "JOIN \"black-kiwi_data\".categories as cat on poi.category = cat.id\n"
 
@@ -63,28 +63,28 @@ func GetRecommendation(minRank float64, lat float64, lon float64, category strin
 			fmt.Fprintf(os.Stderr, "Unable to scan the row: %v\n", err)
 		}
 
-		var cat black_kiwi_structs.Categories
+		var cat black_kiwi_data_structs.Categories
 		switch category {
-			case "Park":
-				cat = black_kiwi_structs.PARK
-			case "Museum":
-				cat = black_kiwi_structs.MUSEUM
-			case "Historical Building":
-				cat = black_kiwi_structs.HISTORICAL_BUILDING
-			case "Theater":
-				cat = black_kiwi_structs.THEATER
-			case "Department":
-				cat = black_kiwi_structs.DEPARTMENT
+		case "Park":
+			cat = black_kiwi_data_structs.PARK
+		case "Museum":
+			cat = black_kiwi_data_structs.MUSEUM
+		case "Historical Building":
+			cat = black_kiwi_data_structs.HISTORICAL_BUILDING
+		case "Theater":
+			cat = black_kiwi_data_structs.THEATER
+		case "Department":
+			cat = black_kiwi_data_structs.DEPARTMENT
 		}
 
 		tmpLon, tmpLat := black_kiwi_db_utils.JSONtoCoordinates(coordinates)
 
-		poiItem := black_kiwi_structs.PoiItem{
-			Id: id,
-			Name: name,
-			Rank: rank,
+		poiItem := black_kiwi_data_structs.PoiItem{
+			Id:       id,
+			Name:     name,
+			Rank:     rank,
 			Category: cat,
-			Coord: black_kiwi_structs.Coordinates{
+			Coord: black_kiwi_data_structs.Coordinates{
 				Latitude:  tmpLat,
 				Longitude: tmpLon,
 			},
