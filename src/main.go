@@ -1,7 +1,10 @@
 package main
 
 import (
+	"os"
+
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 
 	"ITLandfill/Black-Kiwi/endpoints/admin"
 	"ITLandfill/Black-Kiwi/endpoints/default"
@@ -12,9 +15,21 @@ import (
 )
 
 func main() {
-	// Init DB connection
-	black_kiwi_db_utils.ConnPool = black_kiwi_db_handler.InitConnectionPool()
-	defer black_kiwi_db_utils.ConnPool.Close()
+
+	if (os.Getenv("Black_Kiwi_ENV") != "") {
+		log.WithFields(log.Fields{"Black_Kiwi_ENV": os.Getenv("Black_Kiwi_ENV")}).Info("Black_Kiwi_ENV is set")
+	}
+
+	if (os.Getenv("Black_Kiwi_ENV") != "dev" && os.Getenv("Black_Kiwi_ENV") != "dev-nodb") {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
+	if (os.Getenv("Black_Kiwi_ENV") != "dev-nodb") {
+		// Init DB connection
+		black_kiwi_db_utils.ConnPool = black_kiwi_db_handler.InitConnectionPool()
+		defer black_kiwi_db_utils.ConnPool.Close()
+	}
+	
 
 	// Generate a new router
     router := gin.Default()
