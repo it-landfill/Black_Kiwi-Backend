@@ -38,6 +38,7 @@ func main() {
 	router.GET("/", black_kiwi_default.GetRoot)
     router.GET("/getPOIS", black_kiwi_default.GetPOIS)
     router.GET("/getPOIS/:id", black_kiwi_default.GetPOI)
+	router.POST("/login", black_kiwi_default.PostLogin)
 
 	// Admin
 	router.GET("/getRequestLocations", black_kiwi_admin.GetRequestLocations)
