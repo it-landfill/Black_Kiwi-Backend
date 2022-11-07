@@ -6,17 +6,30 @@ import (
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 
-	"ITLandfill/Black-Kiwi/structs/auth_structs"
+	"ITLandfill/Black-Kiwi/dbHandler/default"
 )
 
 
 func PostLogin(c *gin.Context) {
+
+	username := c.PostForm("username")
+	password := c.PostForm("password")
+
 	log.WithFields(log.Fields{
 		"endpoint": "PostLogin",
-		"username": c.Param("username"),
-		"password": c.Param("password"),
+		"username": username,
+		"password": password,
 		}).Info("Endpoint called")
 
-	user := black_kiwi_auth_structs.MockUsers[0]
+	success, user := black_kiwi_login_queries.GetUser(username, password)
+	
+	if !success {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid username or password"})
+		return
+	}
+
+	//TODO: Generate and handle token
+	user.Token = "I am a test token"
+
 	c.IndentedJSON(http.StatusOK, user)
 }
