@@ -2,11 +2,13 @@ package black_kiwi_default
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 
 	"ITLandfill/Black-Kiwi/dbHandler/default"
+	"ITLandfill/Black-Kiwi/structs/auth_structs"
 )
 
 
@@ -21,6 +23,11 @@ func PostLogin(c *gin.Context) {
 		"password": password,
 		}).Info("Endpoint called")
 
+	if os.Getenv("Black_Kiwi_ENV") == "dev-nodb" {
+		log.WithFields(log.Fields{"endpoint": "PostLogin"}).Info("Endpoint called in dev-nodb mode")
+		c.IndentedJSON(http.StatusOK, black_kiwi_auth_structs.MockUsers[0])
+		return
+	}
 	success, user := black_kiwi_login_queries.GetUser(username, password)
 	
 	if !success {

@@ -22,6 +22,8 @@ func main() {
 
 	if (os.Getenv("Black_Kiwi_ENV") != "dev" && os.Getenv("Black_Kiwi_ENV") != "dev-nodb") {
 		gin.SetMode(gin.ReleaseMode)
+	} else {
+		log.WithFields(log.Fields{"Black_Kiwi_ENV": os.Getenv("Black_Kiwi_ENV")}).Warn("Black_Kiwi_ENV is set to debug mode")
 	}
 
 	if (os.Getenv("Black_Kiwi_ENV") != "dev-nodb") {
