@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 
@@ -36,11 +37,15 @@ func main() {
 	// Generate a new router
     router := gin.Default()
 
+	router.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"http://localhost:8080"},
+	}))
+
 	// Default
 	router.GET("/", black_kiwi_default.GetRoot)
     router.GET("/getPOIS", black_kiwi_default.GetPOIS)
     router.GET("/getPOIS/:id", black_kiwi_default.GetPOI)
-	router.POST("/login", black_kiwi_default.PostLogin)
+	// router.POST("/login", black_kiwi_default.PostLogin)
 
 	// Admin
 	router.GET("/getRequestLocations", black_kiwi_admin.GetRequestLocations)
@@ -51,5 +56,5 @@ func main() {
 	router.GET("/getRecommendation", black_kiwi_mobile.GetRecommendation)
 
 
-    router.Run("0.0.0.0:8080")
+    router.Run("0.0.0.0:8081")
 }

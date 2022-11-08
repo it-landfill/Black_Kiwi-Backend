@@ -23,6 +23,10 @@ func PostLogin(c *gin.Context) {
 		"password": password,
 		}).Info("Endpoint called")
 
+	// c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS")
+	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
 	if os.Getenv("Black_Kiwi_ENV") == "dev-nodb" {
 		log.WithFields(log.Fields{"endpoint": "PostLogin"}).Info("Endpoint called in dev-nodb mode")
 		c.IndentedJSON(http.StatusOK, black_kiwi_auth_structs.MockUsers[0])
