@@ -38,7 +38,7 @@ func main() {
     router := gin.Default()
 
 	router.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost:8080"},
+		AllowOrigins: []string{"*"},
 	}))
 
 	// Default
