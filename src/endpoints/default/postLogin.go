@@ -44,9 +44,6 @@ func PostLogin(c *gin.Context) {
 		return
 	}
 
-	//TODO: Generate and handle token REMOVE
-	user.Token = "I am a test token"
-
 	session := sessions.Default(c)
 	session.Set("role", user.Role)
 	session.Save()
