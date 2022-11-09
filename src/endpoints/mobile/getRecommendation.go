@@ -14,6 +14,8 @@ import (
 
 func GetRecommendation(c *gin.Context) {
 
+	// No need to allow CORS on mobile endpoints
+
 	category := c.DefaultQuery("category", "")
 	minRank, err := strconv.ParseFloat(c.Query("minRank"), 32)
 	if err != nil {
