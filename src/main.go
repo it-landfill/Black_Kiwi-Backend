@@ -1,7 +1,11 @@
 package main
 
 import (
+	"os"
+
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 
 	"ITLandfill/Black-Kiwi/endpoints/admin"
 	"ITLandfill/Black-Kiwi/endpoints/default"
@@ -12,17 +16,36 @@ import (
 )
 
 func main() {
-	// Init DB connection
-	black_kiwi_db_utils.ConnPool = black_kiwi_db_handler.InitConnectionPool()
-	defer black_kiwi_db_utils.ConnPool.Close()
+
+	if (os.Getenv("Black_Kiwi_ENV") != "") {
+		log.WithFields(log.Fields{"Black_Kiwi_ENV": os.Getenv("Black_Kiwi_ENV")}).Info("Black_Kiwi_ENV is set")
+	}
+
+	if (os.Getenv("Black_Kiwi_ENV") != "dev" && os.Getenv("Black_Kiwi_ENV") != "dev-nodb") {
+		gin.SetMode(gin.ReleaseMode)
+	} else {
+		log.WithFields(log.Fields{"Black_Kiwi_ENV": os.Getenv("Black_Kiwi_ENV")}).Warn("Black_Kiwi_ENV is set to debug mode")
+	}
+
+	if (os.Getenv("Black_Kiwi_ENV") != "dev-nodb") {
+		// Init DB connection
+		black_kiwi_db_utils.ConnPool = black_kiwi_db_handler.InitConnectionPool()
+		defer black_kiwi_db_utils.ConnPool.Close()
+	}
+	
 
 	// Generate a new router
     router := gin.Default()
+
+	router.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"*"},
+	}))
 
 	// Default
 	router.GET("/", black_kiwi_default.GetRoot)
     router.GET("/getPOIS", black_kiwi_default.GetPOIS)
     router.GET("/getPOIS/:id", black_kiwi_default.GetPOI)
+	// router.POST("/login", black_kiwi_default.PostLogin)
 
 	// Admin
 	router.GET("/getRequestLocations", black_kiwi_admin.GetRequestLocations)
@@ -33,5 +56,5 @@ func main() {
 	router.GET("/getRecommendation", black_kiwi_mobile.GetRecommendation)
 
 
-    router.Run("0.0.0.0:8080")
+    router.Run("0.0.0.0:8081")
 }

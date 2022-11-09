@@ -24,6 +24,23 @@ services:
     networks:
       - default
       - backend
+  public_postgis:
+    container_name: public_postgis
+    image: aleben/itlandfill-cas-postgis-preloaded:1.2
+    restart: on-failure
+    ports:
+      - 5432:5432
+    networks:
+      - default
+      - backend
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=black-kiwi_administrator
+      - POSTGRES_PASSWORD=6whuUYTEhyA2ShR35
+      - POSTGRES_DB=black-kiwi
+    profiles:
+      - debug
 
 networks:
   backend:
