@@ -1,9 +1,12 @@
 package main
 
 import (
+	"net/http"
 	"os"
 
 	"github.com/gin-contrib/cors"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 
 	log "github.com/sirupsen/logrus"
@@ -11,6 +14,7 @@ import (
 	"ITLandfill/Black-Kiwi/endpoints/admin"
 	"ITLandfill/Black-Kiwi/endpoints/default"
 	"ITLandfill/Black-Kiwi/endpoints/mobile"
+
 	"ITLandfill/Black-Kiwi/dbHandler/handler"
 	"ITLandfill/Black-Kiwi/dbHandler/utils"
 )
@@ -42,9 +46,12 @@ func main() {
 }
 
 func createEngine() *gin.Engine {
-	// gin.Default() has already added Logger and Recovery middleware. 
+	// gin.Default() has already added Logger and Recovery middleware.
 	// gin.New() is used to create a new engine without any middleware attached.
-	engine := gin.Default() 
+	engine := gin.Default()
+
+	store := cookie.NewStore([]byte("secret")) // TODO: Change secret
+	engine.Use(sessions.Sessions("sessiontoken", store))
 
 	// Add CORS middleware to allow all origins
 	engine.Use(cors.New(cors.Config{
@@ -74,33 +81,26 @@ func createEngine() *gin.Engine {
 
 // AdminRequired is a simple middleware to check the session
 func AdminRequired(c *gin.Context) {
-
-	/*
 	session := sessions.Default(c)
-	user := session.Get(userkey)
-	if user == nil {
-		// Abort the request with the appropriate error code
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+	role := session.Get("role")
+
+	if role == nil || role.(int8) != 1 {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}
-	// Continue down the chain to handler etc
-	*/
 
 	c.Next()
 }
 
 // UserRequired is a simple middleware to check the session
 func UserRequired(c *gin.Context) {
-
-	/*
 	session := sessions.Default(c)
-	user := session.Get(userkey)
-	if user == nil {
-		// Abort the request with the appropriate error code
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+	role := session.Get("role")
+
+	if role == nil || role.(int8) != 0 {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}
-	// Continue down the chain to handler etc
-	*/
+
 	c.Next()
 }
