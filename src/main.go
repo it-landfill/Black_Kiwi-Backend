@@ -11,7 +11,6 @@ import (
 	"ITLandfill/Black-Kiwi/endpoints/admin"
 	"ITLandfill/Black-Kiwi/endpoints/default"
 	"ITLandfill/Black-Kiwi/endpoints/mobile"
-
 	"ITLandfill/Black-Kiwi/dbHandler/handler"
 	"ITLandfill/Black-Kiwi/dbHandler/utils"
 )
@@ -59,12 +58,49 @@ func createEngine() *gin.Engine {
 	engine.POST("/login", black_kiwi_default.PostLogin)
 
 	// Admin
-	engine.GET("/getRequestLocations", black_kiwi_admin.GetRequestLocations)
-	engine.GET("/getPOIQuartieri", black_kiwi_admin.GetPOIQuartieri)
-	engine.GET("/getCheckinQuartieri", black_kiwi_admin.GetCheckinQuartieri)
+	admin := engine.Group("/admin")
+	admin.Use(AdminRequired)
+	admin.GET("/getRequestLocations", black_kiwi_admin.GetRequestLocations)
+	admin.GET("/getPOIQuartieri", black_kiwi_admin.GetPOIQuartieri)
+	admin.GET("/getCheckinQuartieri", black_kiwi_admin.GetCheckinQuartieri)
 
 	// Mobile
-	engine.GET("/getRecommendation", black_kiwi_mobile.GetRecommendation)
+	mobile := engine.Group("/mobile")
+	mobile.Use(UserRequired)
+	mobile.GET("/getRecommendation", black_kiwi_mobile.GetRecommendation)
 
 	return engine
+}
+
+// AdminRequired is a simple middleware to check the session
+func AdminRequired(c *gin.Context) {
+
+	/*
+	session := sessions.Default(c)
+	user := session.Get(userkey)
+	if user == nil {
+		// Abort the request with the appropriate error code
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+		return
+	}
+	// Continue down the chain to handler etc
+	*/
+
+	c.Next()
+}
+
+// UserRequired is a simple middleware to check the session
+func UserRequired(c *gin.Context) {
+
+	/*
+	session := sessions.Default(c)
+	user := session.Get(userkey)
+	if user == nil {
+		// Abort the request with the appropriate error code
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+		return
+	}
+	// Continue down the chain to handler etc
+	*/
+	c.Next()
 }
