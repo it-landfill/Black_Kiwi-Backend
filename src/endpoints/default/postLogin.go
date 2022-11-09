@@ -4,13 +4,14 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+
 	log "github.com/sirupsen/logrus"
 
 	"ITLandfill/Black-Kiwi/dbHandler/default"
 	"ITLandfill/Black-Kiwi/structs/auth_structs"
 )
-
 
 func PostLogin(c *gin.Context) {
 
@@ -25,7 +26,7 @@ func PostLogin(c *gin.Context) {
 		"endpoint": "PostLogin",
 		"username": username,
 		"password": password,
-		}).Info("Endpoint called")
+	}).Info("Endpoint called")
 
 	var success bool
 	var user black_kiwi_auth_structs.User
@@ -34,16 +35,21 @@ func PostLogin(c *gin.Context) {
 		log.WithFields(log.Fields{"endpoint": "PostLogin"}).Info("Endpoint called in dev-nodb mode")
 		success = true
 		user = black_kiwi_auth_structs.MockUsers[0]
+	} else {
+		success, user = black_kiwi_login_queries.GetUser(username, password)
 	}
-	success, user = black_kiwi_login_queries.GetUser(username, password)
-	
+
 	if !success {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid username or password"})
 		return
 	}
 
-	//TODO: Generate and handle token
+	//TODO: Generate and handle token REMOVE
 	user.Token = "I am a test token"
+
+	session := sessions.Default(c)
+	session.Set("role", user.Role)
+	session.Save()
 
 	c.IndentedJSON(http.StatusOK, user)
 }
