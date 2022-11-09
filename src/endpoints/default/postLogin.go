@@ -29,24 +29,29 @@ func PostLogin(c *gin.Context) {
 	}).Info("Endpoint called")
 
 	var success bool
-	var user black_kiwi_auth_structs.User
+	var user *black_kiwi_auth_structs.User
 
 	if os.Getenv("Black_Kiwi_ENV") == "dev-nodb" {
 		log.WithFields(log.Fields{"endpoint": "PostLogin"}).Info("Endpoint called in dev-nodb mode")
 		success = true
-		user = black_kiwi_auth_structs.MockUsers[0]
+		user = &black_kiwi_auth_structs.MockUsers[0]
 	} else {
 		success, user = black_kiwi_login_queries.GetUser(username, password)
 	}
 
 	if !success {
-		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid username or password"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error while getting user"})
+		return
+	}
+
+	if user == nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Wrong username or password"})
 		return
 	}
 
 	session := sessions.Default(c)
-	session.Set("role", user.Role)
+	session.Set("role", (*user).Role)
 	session.Save()
 
-	c.IndentedJSON(http.StatusOK, user)
+	c.IndentedJSON(http.StatusOK, *user)
 }

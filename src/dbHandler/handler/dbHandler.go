@@ -21,14 +21,14 @@ func InitConnectionPool() *pgxpool.Pool {
 		dbUrl = "postgres://black-kiwi_administrator:6whuUYTEhyA2ShR35@postgis:5432/black-kiwi"
 	}
 
-	log.WithFields(log.Fields{"dbUrl": dbUrl}).Info("Connecting to DB")
+	log.WithFields(log.Fields{"dbUrl": dbUrl}).Info("Generating DB connection pool")
 
 	conn, err := pgxpool.New(context.Background(), dbUrl)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Unable to generate connection pool: %v\n", err)
 		os.Exit(1)
 	} else {
-		fmt.Println("Connection to database established")
+		fmt.Println("Connection pool generated")
 	}
 
 	return conn

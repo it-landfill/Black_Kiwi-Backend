@@ -75,6 +75,9 @@ func createEngine() *gin.Engine {
 	mobile := engine.Group("/mobile")
 	mobile.Use(UserRequired)
 	mobile.GET("/getRecommendation", black_kiwi_mobile.GetRecommendation)
+	mobile.GET("/testAuth", func(c *gin.Context) {
+		c.JSON(http.StatusOK, "Ok")
+	})
 
 	return engine
 }
@@ -84,7 +87,7 @@ func AdminRequired(c *gin.Context) {
 	session := sessions.Default(c)
 	role := session.Get("role")
 
-	if role == nil || role.(int8) != 1 {
+	if role == nil || role.(int8) != 2 {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}
@@ -97,7 +100,7 @@ func UserRequired(c *gin.Context) {
 	session := sessions.Default(c)
 	role := session.Get("role")
 
-	if role == nil || role.(int8) != 0 {
+	if role == nil || role.(int8) != 1 {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}

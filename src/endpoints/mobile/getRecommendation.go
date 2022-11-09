@@ -47,10 +47,17 @@ func GetRecommendation(c *gin.Context) {
 	}).Info("New POI reccomendation requested")
 
 	var res []black_kiwi_data_structs.PoiItem
+	var success bool
 	if os.Getenv("Black_Kiwi_ENV") != "dev-nodb" {
-		res = black_kiwi_mobile_queries.GetRecommendation(minRank, latitude, longitude, category, limit)
+		success, res = black_kiwi_mobile_queries.GetRecommendation(minRank, latitude, longitude, category, limit)
 	} else {
 		res = black_kiwi_data_structs.MockPOIS
+		success = true
+	}
+
+	if !success {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error while getting recommendation"})
+		return
 	}
 
 	c.IndentedJSON(http.StatusOK, res)
