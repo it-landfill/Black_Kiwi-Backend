@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	log "github.com/sirupsen/logrus"
 
 	"ITLandfill/Black-Kiwi/structs/data_structs"
 )
@@ -16,5 +17,7 @@ func GetPOIQuartieri(c *gin.Context) {
 	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS")
 	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	
+	log.Info("GetPOIQuartieri endpoint called")
+
 	c.IndentedJSON(http.StatusOK, black_kiwi_data_structs.MockQuartiereInfo)
 }

@@ -6,6 +6,6 @@ type User struct {
 }
 
 var MockUsers = []User{
-	{Username: "admin", Role: 1},
-	{Username: "user", Role: 2},
+	{Username: "admin", Role: 2},
+	{Username: "user", Role: 1},
 }

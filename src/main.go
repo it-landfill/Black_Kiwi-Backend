@@ -70,6 +70,7 @@ func createEngine() *gin.Engine {
 	admin.GET("/getRequestLocations", black_kiwi_admin.GetRequestLocations)
 	admin.GET("/getPOIQuartieri", black_kiwi_admin.GetPOIQuartieri)
 	admin.GET("/getCheckinQuartieri", black_kiwi_admin.GetCheckinQuartieri)
+	admin.POST("/newPOI", black_kiwi_admin.PostNewPOI)
 
 	// Mobile
 	mobile := engine.Group("/mobile")
