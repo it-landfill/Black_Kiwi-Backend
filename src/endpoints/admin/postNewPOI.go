@@ -22,7 +22,7 @@ func PostNewPOI(c *gin.Context) {
 	if err := c.BindJSON(&body); err != nil {
 		log.WithFields(log.Fields{"error": err}).Error("Error while parsing body in PostNewPOI")
 		
-		c.AbortWithError(http.StatusBadRequest, err)
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Missing or malformed JSON body", "errorMessage": err.Error()})
 		return
 	}
 
