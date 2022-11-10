@@ -46,6 +46,11 @@
                     "type" : "string",
                     "example" : "testUser",
                     "description" : "The user password encoded with [TODO: INSERIRE ALGORITMO\nCRITTOGRAFIA PW]\n"
+                  },
+                  "role" : {
+                    "type" : "integer",
+                    "example" : 1,
+                    "description" : "The role of the current user (only authenticate if the role is correct)\n"
                   }
                 },
                 "required" : [ "username", "password" ]
@@ -84,7 +89,7 @@
         }
       }
     },
-    "/getPOIS" : {
+    "/pois" : {
       "get" : {
         "security" : [ ],
         "summary" : "Get all POI",
@@ -105,8 +110,39 @@
           "400" : {
             "description" : "Bad request."
           },
-          "401" : {
-            "description" : "Authorization information is missing or invalid."
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/pois/{id}" : {
+      "get" : {
+        "security" : [ ],
+        "summary" : "Get a POI",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "description" : "Numeric ID of the POI to get",
+          "schema" : {
+            "type" : "integer",
+            "example" : 0
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Info on a POI",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/POI_Item"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
           },
           "500" : {
             "description" : "Internal server error."
