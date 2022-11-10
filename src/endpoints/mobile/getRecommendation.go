@@ -17,27 +17,52 @@ func GetRecommendation(c *gin.Context) {
 	// No need to allow CORS on mobile endpoints
 
 	category := c.DefaultQuery("category", "")
-	minRank, err := strconv.ParseFloat(c.Query("minRank"), 32)
-	if err != nil {
-		log.WithFields(log.Fields{"error": err}).Error("Error while parsing limit in GetRecommendation")
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	}
+
 	limit, err := strconv.Atoi(c.DefaultQuery("limit", "0"))
 	if err != nil {
 		log.WithFields(log.Fields{"error": err}).Error("Error while parsing limit in GetRecommendation")
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
-	latitude, err := strconv.ParseFloat(c.Query("latitude"), 64)
-	if err != nil {
-		log.WithFields(log.Fields{"error": err}).Error("Error while parsing latitude in GetRecommendation")
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	}
-	longitude, err := strconv.ParseFloat(c.Query("longitude"), 64)
-	if err != nil {
-		log.WithFields(log.Fields{"error": err}).Error("Error while parsing longitude in GetRecommendation")
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+	var minRank float64
+	if rank := c.Query("minRank"); rank == "" {
+		log.Warn("Missing minRank parameter in GetRecommendation")
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Missing minRank parameter"})
+		return
+	} else {
+		minRank, err = strconv.ParseFloat(rank, 32)
+		if err != nil {
+			log.WithFields(log.Fields{"error": err}).Error("Error while parsing limit in GetRecommendation")
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		}
 	}
 
+	var latitude float64
+	if lat := c.Query("latitude"); lat == "" {
+		log.Warn("Missing latitude parameter in GetRecommendation")
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Missing latitude parameter"})
+		return
+	} else {
+		latitude, err = strconv.ParseFloat(lat, 32)
+		if err != nil {
+			log.WithFields(log.Fields{"error": err}).Error("Error while parsing latitude in GetRecommendation")
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		}
+	}
+
+	var longitude float64
+	if long := c.Query("longitude"); long == "" {
+		log.Warn("Missing longitude parameter in GetRecommendation")
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Missing longitude parameter"})
+		return
+	} else {
+		longitude, err = strconv.ParseFloat(long, 32)
+		if err != nil {
+			log.WithFields(log.Fields{"error": err}).Error("Error while parsing longitude in GetRecommendation")
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		}
+	}
+	
 	log.WithFields(log.Fields{
 		"category":  category,
 		"minRank":   minRank,
