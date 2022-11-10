@@ -3,7 +3,8 @@ package black_kiwi_mobile_queries
 import (
 	"context"
 	"fmt"
-	"os"
+
+	log "github.com/sirupsen/logrus"
 
 	black_kiwi_db_utils "ITLandfill/Black-Kiwi/dbHandler/utils"
 	"ITLandfill/Black-Kiwi/structs/data_structs"
@@ -18,7 +19,8 @@ JOIN "black-kiwi_data".categories as cat on poi.category = cat.id
 WHERE cat.name = 'park' and poi.rank<0
 ORDER BY meters;
 */
-func GetRecommendation(minRank float64, lat float64, lon float64, category string, limit int) (poiList []black_kiwi_data_structs.PoiItem) {
+func GetRecommendation(minRank float64, lat float64, lon float64, category string, limit int) (success bool, poiList []black_kiwi_data_structs.PoiItem) {
+	success = true
 	queryStr := ""
 	poiList = []black_kiwi_data_structs.PoiItem{}
 
@@ -47,7 +49,8 @@ func GetRecommendation(minRank float64, lat float64, lon float64, category strin
 
 	rows, err := black_kiwi_db_utils.ConnPool.Query(context.Background(), queryStr)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
+		log.WithFields(log.Fields{"error":err}).Error("QueryRow failed for recommended POIS.")
+		success = false
 	}
 	defer rows.Close()
 
@@ -60,7 +63,8 @@ func GetRecommendation(minRank float64, lat float64, lon float64, category strin
 		var meters float64
 		err = rows.Scan(&id, &name, &rank, &category, &coordinates, &meters)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Unable to scan the row: %v\n", err)
+			log.WithFields(log.Fields{"error":err}).Error("QueryRow failed while scanning rows for recommended POIS.")
+			success = false
 		}
 
 		var cat black_kiwi_data_structs.Categories
