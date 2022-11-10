@@ -2,11 +2,11 @@
   "openapi" : "3.0.0",
   "servers" : [ {
     "description" : "SwaggerHub API Auto Mocking",
-    "url" : "https://virtserver.swaggerhub.com/ITLandfill/Black-Kiwi/1.0.1"
+    "url" : "https://virtserver.swaggerhub.com/ITLandfill/Black-Kiwi/1.0.3"
   } ],
   "info" : {
     "description" : "API used for the Context Aware System course @ Università degli studi di Bologna a.a. 2021/2022.\nITLandfill group\n",
-    "version" : "1.0.2",
+    "version" : "1.0.3",
     "title" : "Black-Kiwi API",
     "contact" : {
       "email" : "alessandro.benetton@studio.unibo.it",
@@ -28,27 +28,47 @@
   "paths" : {
     "/login" : {
       "post" : {
+        "security" : [ ],
         "summary" : "Authenticate the user",
-        "parameters" : [ {
-          "in" : "query",
-          "name" : "username",
+        "requestBody" : {
           "required" : true,
-          "schema" : {
-            "type" : "string"
-          },
-          "description" : "The username or mail address of the user\n"
-        }, {
-          "in" : "query",
-          "name" : "password",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          },
-          "description" : "The user password encoded with [TODO: INSERIRE ALGORITMO\nCRITTOGRAFIA PW]\n"
-        } ],
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "username" : {
+                    "type" : "string",
+                    "example" : "testUser",
+                    "description" : "The username or mail address of the user\n"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "example" : "testUser",
+                    "description" : "The user password encoded with [TODO: INSERIRE ALGORITMO\nCRITTOGRAFIA PW]\n"
+                  },
+                  "role" : {
+                    "type" : "integer",
+                    "example" : 1,
+                    "description" : "The role of the current user (only authenticate if the role is correct)\n"
+                  }
+                },
+                "required" : [ "username", "password" ]
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "description" : "authentication succeded",
+            "headers" : {
+              "Set-Cookie" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : "sessiontoken=abcdefg; PATH=/; HttpOnly"
+                }
+              }
+            },
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -63,16 +83,74 @@
           "401" : {
             "description" : "Authorization information is missing or invalid."
           },
-          "404" : {
-            "description" : "A user with the specified ID was not found."
-          },
-          "429" : {
-            "description" : "Too Many Requests."
+          "500" : {
+            "description" : "Internal server error."
           }
         }
       }
     },
-    "/getRecommendation" : {
+    "/pois" : {
+      "get" : {
+        "security" : [ ],
+        "summary" : "Get all POI",
+        "responses" : {
+          "200" : {
+            "description" : "List of all POI",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/POI_Item"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/pois/{id}" : {
+      "get" : {
+        "security" : [ ],
+        "summary" : "Get a POI",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "description" : "Numeric ID of the POI to get",
+          "schema" : {
+            "type" : "integer",
+            "example" : 0
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Info on a POI",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/POI_Item"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/mobile/getRecommendation" : {
       "get" : {
         "tags" : [ "mobile" ],
         "summary" : "Request for a list of POI with specified category and minRank",
@@ -138,42 +216,13 @@
           "401" : {
             "description" : "Authorization information is missing or invalid."
           },
-          "429" : {
-            "description" : "Too Many Requests."
+          "500" : {
+            "description" : "Internal server error."
           }
         }
       }
     },
-    "/getPOIS" : {
-      "get" : {
-        "summary" : "Get all POI",
-        "responses" : {
-          "200" : {
-            "description" : "List of all POI",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/POI_Item"
-                  }
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request."
-          },
-          "401" : {
-            "description" : "Authorization information is missing or invalid."
-          },
-          "429" : {
-            "description" : "Too Many Requests."
-          }
-        }
-      }
-    },
-    "/newPOI" : {
+    "/admin/newPOI" : {
       "post" : {
         "tags" : [ "administration" ],
         "summary" : "Add a POI to the database",
@@ -204,13 +253,13 @@
           "401" : {
             "description" : "Authorization information is missing or invalid."
           },
-          "429" : {
-            "description" : "Too Many Requests."
+          "500" : {
+            "description" : "Internal server error."
           }
         }
       }
     },
-    "/getRequestLocations" : {
+    "/admin/getRequestLocations" : {
       "get" : {
         "summary" : "Return the location of the requests",
         "parameters" : [ {
@@ -248,14 +297,14 @@
           "401" : {
             "description" : "Authorization information is missing or invalid."
           },
-          "429" : {
-            "description" : "Too Many Requests."
+          "500" : {
+            "description" : "Internal server error."
           }
         },
         "tags" : [ "administration" ]
       }
     },
-    "/getPOIQuartieri" : {
+    "/admin/getPOIQuartieri" : {
       "get" : {
         "summary" : "Return POI distribution based on quartieri.",
         "responses" : {
@@ -278,14 +327,14 @@
           "401" : {
             "description" : "Authorization information is missing or invalid."
           },
-          "429" : {
-            "description" : "Too Many Requests."
+          "500" : {
+            "description" : "Internal server error."
           }
         },
         "tags" : [ "administration" ]
       }
     },
-    "/getCheckinQuartieri" : {
+    "/admin/getCheckinQuartieri" : {
       "get" : {
         "summary" : "Return checkin distribution based on quartieri.",
         "responses" : {
@@ -308,8 +357,8 @@
           "401" : {
             "description" : "Authorization information is missing or invalid."
           },
-          "429" : {
-            "description" : "Too Many Requests."
+          "500" : {
+            "description" : "Internal server error."
           }
         },
         "tags" : [ "administration" ]
@@ -317,6 +366,13 @@
     }
   },
   "components" : {
+    "securitySchemes" : {
+      "cookieAuth" : {
+        "type" : "apiKey",
+        "in" : "cookie",
+        "name" : "sessiontoken"
+      }
+    },
     "schemas" : {
       "POI_Item" : {
         "type" : "object",
@@ -351,6 +407,11 @@
             "type" : "string",
             "example" : "Museo Medievale"
           },
+          "rank" : {
+            "type" : "number",
+            "format" : "float",
+            "example" : 10.2
+          },
           "category" : {
             "$ref" : "#/components/schemas/Categories"
           },
@@ -379,9 +440,13 @@
         "type" : "object",
         "required" : [ "username", "password" ],
         "properties" : {
+          "id" : {
+            "type" : "number",
+            "example" : 1
+          },
           "username" : {
             "type" : "string",
-            "example" : "MarioRossi"
+            "example" : "testUser"
           },
           "role" : {
             "type" : "string",
@@ -430,5 +495,8 @@
         }
       }
     }
-  }
+  },
+  "security" : [ {
+    "cookieAuth" : [ ]
+  } ]
 }
