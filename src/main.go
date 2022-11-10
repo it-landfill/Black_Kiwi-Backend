@@ -60,8 +60,8 @@ func createEngine() *gin.Engine {
 
 	// Default
 	engine.GET("/", black_kiwi_default.GetRoot)
-	engine.GET("/getPOIS", black_kiwi_default.GetPOIS)
-	engine.GET("/getPOIS/:id", black_kiwi_default.GetPOI)
+	engine.GET("/pois", black_kiwi_default.GetPOIS)
+	engine.GET("/pois/:id", black_kiwi_default.GetPOI)
 	engine.POST("/login", black_kiwi_default.PostLogin)
 
 	// Admin
