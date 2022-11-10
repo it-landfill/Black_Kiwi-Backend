@@ -78,7 +78,7 @@
           "401" : {
             "description" : "Authorization information is missing or invalid."
           },
-          "503" : {
+          "500" : {
             "description" : "Internal server error."
           }
         }
@@ -108,7 +108,7 @@
           "401" : {
             "description" : "Authorization information is missing or invalid."
           },
-          "503" : {
+          "500" : {
             "description" : "Internal server error."
           }
         }
@@ -180,7 +180,7 @@
           "401" : {
             "description" : "Authorization information is missing or invalid."
           },
-          "503" : {
+          "500" : {
             "description" : "Internal server error."
           }
         }
@@ -217,7 +217,7 @@
           "401" : {
             "description" : "Authorization information is missing or invalid."
           },
-          "503" : {
+          "500" : {
             "description" : "Internal server error."
           }
         }
@@ -261,7 +261,7 @@
           "401" : {
             "description" : "Authorization information is missing or invalid."
           },
-          "503" : {
+          "500" : {
             "description" : "Internal server error."
           }
         },
@@ -291,7 +291,7 @@
           "401" : {
             "description" : "Authorization information is missing or invalid."
           },
-          "503" : {
+          "500" : {
             "description" : "Internal server error."
           }
         },
@@ -321,7 +321,7 @@
           "401" : {
             "description" : "Authorization information is missing or invalid."
           },
-          "503" : {
+          "500" : {
             "description" : "Internal server error."
           }
         },
