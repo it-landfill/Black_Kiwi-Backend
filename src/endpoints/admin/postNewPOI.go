@@ -21,6 +21,7 @@ func PostNewPOI(c *gin.Context) {
 	body := black_kiwi_data_structs.PoiItem{}
 	if err := c.BindJSON(&body); err != nil {
 		log.WithFields(log.Fields{"error": err}).Error("Error while parsing body in PostNewPOI")
+		
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}

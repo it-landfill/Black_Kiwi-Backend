@@ -3,6 +3,7 @@ package black_kiwi_default
 import (
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -21,6 +22,11 @@ func PostLogin(c *gin.Context) {
 
 	username := c.PostForm("username")
 	password := c.PostForm("password")
+	role, err := strconv.Atoi(c.DefaultPostForm("role", "-1"))
+	if err != nil {
+		log.WithFields(log.Fields{"error": err, "role": role}).Error("Error while parsing role in PostLogin")
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
 
 	log.WithFields(log.Fields{
 		"endpoint": "PostLogin",
@@ -46,6 +52,11 @@ func PostLogin(c *gin.Context) {
 
 	if user == nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Wrong username or password"})
+		return
+	}
+
+	if role != -1 && (*user).Role != int8(role) {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Wrong role"})
 		return
 	}
 
