@@ -88,8 +88,13 @@ func AdminRequired(c *gin.Context) {
 	session := sessions.Default(c)
 	role := session.Get("role")
 
-	if role == nil || role.(int8) != 2 {
+	if role == nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	if role.(int8) != 2 {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Wrong role"})
 		return
 	}
 
@@ -101,8 +106,13 @@ func UserRequired(c *gin.Context) {
 	session := sessions.Default(c)
 	role := session.Get("role")
 
-	if role == nil || role.(int8) != 1 {
+	if role == nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	if role.(int8) != 1 {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Wrong role"})
 		return
 	}
 
