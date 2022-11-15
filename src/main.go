@@ -15,6 +15,8 @@ import (
 	"ITLandfill/Black-Kiwi/endpoints/default"
 	"ITLandfill/Black-Kiwi/endpoints/mobile"
 
+	"ITLandfill/Black-Kiwi/structs/auth_structs"
+
 	"ITLandfill/Black-Kiwi/dbHandler/handler"
 	"ITLandfill/Black-Kiwi/dbHandler/utils"
 )
@@ -36,6 +38,9 @@ func main() {
 		black_kiwi_db_utils.ConnPool = black_kiwi_db_handler.InitConnectionPool()
 		defer black_kiwi_db_utils.ConnPool.Close()
 	}
+
+	// Initialize the token store
+	black_kiwi_auth_structs.InitTokenArr()
 
 	// Generate a new router
 	router := createEngine()
@@ -85,17 +90,26 @@ func createEngine() *gin.Engine {
 
 // AdminRequired is a simple middleware to check the session
 func AdminRequired(c *gin.Context) {
-	session := sessions.Default(c)
-	role := session.Get("role")
+	
+	tokenStr := c.GetHeader("X-API-KEY")
 
-	if role == nil {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		return
+	if tokenStr == "" {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Missing token"})
 	}
 
-	if role.(int8) != 2 {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Wrong role"})
-		return
+	token := black_kiwi_auth_structs.GetToken(tokenStr)
+	
+	if token == nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
+	}
+
+	if token != nil && (*token).IsExpired() {
+		(*token).DeleteToken()
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Expired token"})
+	}
+
+	if token != nil && !(*token).IsAdmin() {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Not admin"})
 	}
 
 	c.Next()
@@ -103,17 +117,25 @@ func AdminRequired(c *gin.Context) {
 
 // UserRequired is a simple middleware to check the session
 func UserRequired(c *gin.Context) {
-	session := sessions.Default(c)
-	role := session.Get("role")
+	tokenStr := c.GetHeader("token")
 
-	if role == nil {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		return
+	if tokenStr == "" {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Missing token"})
 	}
 
-	if role.(int8) != 1 {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Wrong role"})
-		return
+	token := black_kiwi_auth_structs.GetToken(tokenStr)
+	
+	if token == nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
+	}
+
+	if token != nil && (*token).IsExpired() {
+		(*token).DeleteToken()
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Expired token"})
+	}
+
+	if token != nil && !(*token).IsUser() {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Not user"})
 	}
 
 	c.Next()

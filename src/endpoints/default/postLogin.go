@@ -5,7 +5,6 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 
 	log "github.com/sirupsen/logrus"
@@ -60,9 +59,7 @@ func PostLogin(c *gin.Context) {
 		return
 	}
 
-	session := sessions.Default(c)
-	session.Set("role", (*user).Role)
-	session.Save()
+	black_kiwi_auth_structs.AddToken(user)
 
 	c.IndentedJSON(http.StatusOK, *user)
 }
