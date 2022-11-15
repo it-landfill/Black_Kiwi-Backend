@@ -5,8 +5,6 @@ import (
 	"os"
 
 	"github.com/gin-contrib/cors"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 
 	log "github.com/sirupsen/logrus"
@@ -55,12 +53,11 @@ func createEngine() *gin.Engine {
 	// gin.New() is used to create a new engine without any middleware attached.
 	engine := gin.Default()
 
-	store := cookie.NewStore([]byte("secret")) // TODO: Change secret
-	engine.Use(sessions.Sessions("sessiontoken", store))
-
 	// Add CORS middleware to allow all origins
 	engine.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"*"},
+		AllowMethods: []string{"GET", "POST", "DELETE"},
+		AllowHeaders: []string{"Content-Type", "X-API-KEY"},
 	}))
 
 	// Default
@@ -95,21 +92,25 @@ func AdminRequired(c *gin.Context) {
 
 	if tokenStr == "" {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Missing token"})
+		return
 	}
 
 	token := black_kiwi_auth_structs.GetToken(tokenStr)
 	
 	if token == nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
+		return
 	}
 
 	if token != nil && (*token).IsExpired() {
 		(*token).DeleteToken()
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Expired token"})
+		return
 	}
 
 	if token != nil && !(*token).IsAdmin() {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Not admin"})
+		return
 	}
 
 	c.Next()
@@ -121,21 +122,25 @@ func UserRequired(c *gin.Context) {
 
 	if tokenStr == "" {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Missing token"})
+		return
 	}
 
 	token := black_kiwi_auth_structs.GetToken(tokenStr)
 	
 	if token == nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
+		return
 	}
 
 	if token != nil && (*token).IsExpired() {
 		(*token).DeleteToken()
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Expired token"})
+		return
 	}
 
 	if token != nil && !(*token).IsUser() {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Not user"})
+		return
 	}
 
 	c.Next()

@@ -12,11 +12,6 @@ import (
 
 // getAlbums responds with the list of all albums as JSON.
 func PostNewPOI(c *gin.Context) {
-
-	// Allow CORS
-	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS")
-	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-
 	// Get the POI from the request body
 	body := black_kiwi_data_structs.PoiItem{}
 	if err := c.BindJSON(&body); err != nil {

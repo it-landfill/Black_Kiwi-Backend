@@ -14,11 +14,6 @@ import (
 )
 
 func PostLogin(c *gin.Context) {
-
-	// Allow CORS
-	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS")
-	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 	role, err := strconv.Atoi(c.DefaultPostForm("role", "-1"))

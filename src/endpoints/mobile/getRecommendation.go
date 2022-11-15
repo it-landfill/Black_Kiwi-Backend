@@ -14,8 +14,6 @@ import (
 
 func GetRecommendation(c *gin.Context) {
 
-	// No need to allow CORS on mobile endpoints
-
 	category := c.DefaultQuery("category", "")
 
 	limit, err := strconv.Atoi(c.DefaultQuery("limit", "0"))
