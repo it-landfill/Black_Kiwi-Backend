@@ -483,6 +483,9 @@ ALTER TABLE ONLY "black-kiwi_data".requests
 -- Name: DATABASE "black-kiwi"; Type: ACL; Schema: -; Owner: postgresAdmin
 --
 
+INSERT INTO "black-kiwi_authentication".users (username, password, role) VALUES ('testUser', 'testUser', 1);
+INSERT INTO "black-kiwi_authentication".users (username, password, role) VALUES ('testAdmin', 'testAdmin', 2);
+
 CREATE USER "black-kiwi_login" WITH PASSWORD 'vwWTR7sFRw9sh9KA';
 CREATE USER "black-kiwi_query" WITH PASSWORD '4ksZPHdEAHyaY6Ma';
 
