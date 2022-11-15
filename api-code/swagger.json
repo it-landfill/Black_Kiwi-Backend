@@ -443,10 +443,10 @@
   },
   "components" : {
     "securitySchemes" : {
-      "cookieAuth" : {
+      "ApiKeyAuth" : {
         "type" : "apiKey",
-        "in" : "cookie",
-        "name" : "sessiontoken"
+        "in" : "header",
+        "name" : "X-API-KEY"
       }
     },
     "schemas" : {
@@ -516,10 +516,6 @@
         "type" : "object",
         "required" : [ "username", "password" ],
         "properties" : {
-          "id" : {
-            "type" : "number",
-            "example" : 1
-          },
           "username" : {
             "type" : "string",
             "example" : "testUser"
@@ -528,6 +524,11 @@
             "type" : "string",
             "enum" : [ "user", "admin" ],
             "example" : "user"
+          },
+          "token" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "5bd979b4-725c-44e8-a86b-b699174a2e13"
           }
         }
       },
@@ -573,6 +574,6 @@
     }
   },
   "security" : [ {
-    "cookieAuth" : [ ]
+    "ApiKeyAuth" : [ ]
   } ]
 }
