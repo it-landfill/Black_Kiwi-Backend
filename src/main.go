@@ -5,8 +5,6 @@ import (
 	"os"
 
 	"github.com/gin-contrib/cors"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 
 	log "github.com/sirupsen/logrus"
@@ -14,6 +12,8 @@ import (
 	"ITLandfill/Black-Kiwi/endpoints/admin"
 	"ITLandfill/Black-Kiwi/endpoints/default"
 	"ITLandfill/Black-Kiwi/endpoints/mobile"
+
+	"ITLandfill/Black-Kiwi/structs/auth_structs"
 
 	"ITLandfill/Black-Kiwi/dbHandler/handler"
 	"ITLandfill/Black-Kiwi/dbHandler/utils"
@@ -37,6 +37,9 @@ func main() {
 		defer black_kiwi_db_utils.ConnPool.Close()
 	}
 
+	// Initialize the token store
+	black_kiwi_auth_structs.InitTokenArr()
+
 	// Generate a new router
 	router := createEngine()
 
@@ -50,12 +53,11 @@ func createEngine() *gin.Engine {
 	// gin.New() is used to create a new engine without any middleware attached.
 	engine := gin.Default()
 
-	store := cookie.NewStore([]byte("secret")) // TODO: Change secret
-	engine.Use(sessions.Sessions("sessiontoken", store))
-
 	// Add CORS middleware to allow all origins
 	engine.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"*"},
+		AllowMethods: []string{"GET", "POST", "DELETE"},
+		AllowHeaders: []string{"Content-Type", "X-API-KEY"},
 	}))
 
 	// Default
@@ -85,16 +87,29 @@ func createEngine() *gin.Engine {
 
 // AdminRequired is a simple middleware to check the session
 func AdminRequired(c *gin.Context) {
-	session := sessions.Default(c)
-	role := session.Get("role")
+	
+	tokenStr := c.GetHeader("X-API-KEY")
 
-	if role == nil {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+	if tokenStr == "" {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Missing token"})
 		return
 	}
 
-	if role.(int8) != 2 {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Wrong role"})
+	token := black_kiwi_auth_structs.GetToken(tokenStr)
+	
+	if token == nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
+		return
+	}
+
+	if token != nil && (*token).IsExpired() {
+		(*token).DeleteToken()
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Expired token"})
+		return
+	}
+
+	if token != nil && !(*token).IsAdmin() {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Not admin"})
 		return
 	}
 
@@ -103,16 +118,28 @@ func AdminRequired(c *gin.Context) {
 
 // UserRequired is a simple middleware to check the session
 func UserRequired(c *gin.Context) {
-	session := sessions.Default(c)
-	role := session.Get("role")
+	tokenStr := c.GetHeader("token")
 
-	if role == nil {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+	if tokenStr == "" {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Missing token"})
 		return
 	}
 
-	if role.(int8) != 1 {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Wrong role"})
+	token := black_kiwi_auth_structs.GetToken(tokenStr)
+	
+	if token == nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
+		return
+	}
+
+	if token != nil && (*token).IsExpired() {
+		(*token).DeleteToken()
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Expired token"})
+		return
+	}
+
+	if token != nil && !(*token).IsUser() {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Not user"})
 		return
 	}
 

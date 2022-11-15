@@ -5,7 +5,6 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 
 	log "github.com/sirupsen/logrus"
@@ -15,11 +14,6 @@ import (
 )
 
 func PostLogin(c *gin.Context) {
-
-	// Allow CORS
-	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS")
-	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 	role, err := strconv.Atoi(c.DefaultPostForm("role", "-1"))
@@ -60,9 +54,7 @@ func PostLogin(c *gin.Context) {
 		return
 	}
 
-	session := sessions.Default(c)
-	session.Set("role", (*user).Role)
-	session.Save()
+	black_kiwi_auth_structs.AddToken(user)
 
 	c.IndentedJSON(http.StatusOK, *user)
 }

@@ -11,11 +11,6 @@ import (
 )
 
 func GetPOI(c *gin.Context) {
-
-	// Allow CORS
-	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS")
-	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-	
 	id, err := strconv.ParseInt(c.Param("id"), 10, 0)
 
 	if err != nil {
