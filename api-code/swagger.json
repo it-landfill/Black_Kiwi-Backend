@@ -2,11 +2,14 @@
   "openapi" : "3.0.0",
   "servers" : [ {
     "description" : "SwaggerHub API Auto Mocking",
-    "url" : "https://virtserver.swaggerhub.com/ITLandfill/Black-Kiwi/1.0.3"
+    "url" : "https://virtserver.swaggerhub.com/ITLandfill/Black-Kiwi/1.0.4"
+  }, {
+    "description" : "Ajeje",
+    "url" : "http://casadiale.noip.me:62950"
   } ],
   "info" : {
     "description" : "API used for the Context Aware System course @ Università degli studi di Bologna a.a. 2021/2022.\nITLandfill group\n",
-    "version" : "1.0.3",
+    "version" : "1.0.4",
     "title" : "Black-Kiwi API",
     "contact" : {
       "email" : "alessandro.benetton@studio.unibo.it",
@@ -239,6 +242,79 @@
         "responses" : {
           "200" : {
             "description" : "The generated POI",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/POI_Item"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/admin/editPOI" : {
+      "post" : {
+        "tags" : [ "administration" ],
+        "summary" : "Edit a POI in the database.\nNote that all the fields will be overwritten with the submitted ones.\n",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/POI_Item"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The updated POI",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/POI_Item"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/admin/deletePOI" : {
+      "delete" : {
+        "tags" : [ "administration" ],
+        "summary" : "Delete a POI from the database.\n",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "poiID",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The deleted POI",
             "content" : {
               "application/json" : {
                 "schema" : {
