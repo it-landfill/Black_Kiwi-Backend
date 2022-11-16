@@ -12,16 +12,16 @@ import (
 //https://app.swaggerhub.com/apis/ITLandfill/Black-Kiwi/1.0.2
 
 /*
-SELECT quartieri.nomequart, quartieri.geom, count(poi.name) as poi_density
+SELECT quartieri.nomequart, json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(quartieri.geom)::json)) as geom, count(poi.name) as poi_density
 FROM "black-kiwi_data".poi_list as poi
 JOIN "black-kiwi_data"."quartieri-bologna" as quartieri on st_within(poi.geom, quartieri.geom)
 GROUP BY quartieri.nomequart, quartieri.geom;
 
-SELECT quartieri.nomequart, quartieri.geom, count(poi.name) as poi_density FROM "black-kiwi_data".poi_list as poi JOIN "black-kiwi_data"."quartieri-bologna" as quartieri on st_within(poi.geom, quartieri.geom) GROUP BY quartieri.nomequart, quartieri.geom;
+SELECT quartieri.nomequart, json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(quartieri.geom)::json)) as geom, count(poi.name) as poi_density FROM "black-kiwi_data".poi_list as poi JOIN "black-kiwi_data"."quartieri-bologna" as quartieri on st_within(poi.geom, quartieri.geom) GROUP BY quartieri.nomequart, quartieri.geom;
 */
 func GetPOIQuartieri() (result bool, poiList *[]black_kiwi_data_structs.QuartiereInfo)  {
 
-	rows, err := black_kiwi_db_utils.ConnPool.Query(context.Background(), "SELECT quartieri.nomequart, quartieri.geom, count(poi.name) as poi_density FROM \"black-kiwi_data\".poi_list as poi JOIN \"black-kiwi_data\".\"quartieri-bologna\" as quartieri on st_within(poi.geom, quartieri.geom) GROUP BY quartieri.nomequart, quartieri.geom;")
+	rows, err := black_kiwi_db_utils.ConnPool.Query(context.Background(), "SELECT quartieri.nomequart, json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(quartieri.geom)::json)) as geom, count(poi.name) as poi_density FROM \"black-kiwi_data\".poi_list as poi JOIN \"black-kiwi_data\".\"quartieri-bologna\" as quartieri on st_within(poi.geom, quartieri.geom) GROUP BY quartieri.nomequart, quartieri.geom;")
 	if err != nil {
 		log.WithFields(log.Fields{"error":err}).Error("QueryRow failed for get POI quartieri.")
 		return false, nil
