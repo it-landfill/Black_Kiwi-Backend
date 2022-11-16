@@ -2,11 +2,14 @@
   "openapi" : "3.0.0",
   "servers" : [ {
     "description" : "SwaggerHub API Auto Mocking",
-    "url" : "https://virtserver.swaggerhub.com/ITLandfill/Black-Kiwi/1.0.3"
+    "url" : "https://virtserver.swaggerhub.com/ITLandfill/Black-Kiwi/1.0.5"
+  }, {
+    "description" : "Black-Kiwi  servr",
+    "url" : "http://casadiale.noip.me:62950"
   } ],
   "info" : {
     "description" : "API used for the Context Aware System course @ Università degli studi di Bologna a.a. 2021/2022.\nITLandfill group\n",
-    "version" : "1.0.3",
+    "version" : "1.0.5",
     "title" : "Black-Kiwi API",
     "contact" : {
       "email" : "alessandro.benetton@studio.unibo.it",
@@ -76,6 +79,25 @@
                 }
               }
             }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/logout" : {
+      "post" : {
+        "summary" : "Logout the user",
+        "responses" : {
+          "200" : {
+            "description" : "Logout succeded"
           },
           "400" : {
             "description" : "Bad request."
@@ -259,6 +281,79 @@
         }
       }
     },
+    "/admin/editPOI" : {
+      "post" : {
+        "tags" : [ "administration" ],
+        "summary" : "Edit a POI in the database.\nNote that all the fields will be overwritten with the submitted ones.\n",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/POI_Item"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The updated POI",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/POI_Item"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/admin/deletePOI" : {
+      "delete" : {
+        "tags" : [ "administration" ],
+        "summary" : "Delete a POI from the database.\n",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "poiID",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The deleted POI",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/POI_Item"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
     "/admin/getRequestLocations" : {
       "get" : {
         "summary" : "Return the location of the requests",
@@ -367,10 +462,10 @@
   },
   "components" : {
     "securitySchemes" : {
-      "cookieAuth" : {
+      "ApiKeyAuth" : {
         "type" : "apiKey",
-        "in" : "cookie",
-        "name" : "sessiontoken"
+        "in" : "header",
+        "name" : "X-API-KEY"
       }
     },
     "schemas" : {
@@ -440,10 +535,6 @@
         "type" : "object",
         "required" : [ "username", "password" ],
         "properties" : {
-          "id" : {
-            "type" : "number",
-            "example" : 1
-          },
           "username" : {
             "type" : "string",
             "example" : "testUser"
@@ -452,6 +543,11 @@
             "type" : "string",
             "enum" : [ "user", "admin" ],
             "example" : "user"
+          },
+          "token" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "5bd979b4-725c-44e8-a86b-b699174a2e13"
           }
         }
       },
@@ -497,6 +593,6 @@
     }
   },
   "security" : [ {
-    "cookieAuth" : [ ]
+    "ApiKeyAuth" : [ ]
   } ]
 }
