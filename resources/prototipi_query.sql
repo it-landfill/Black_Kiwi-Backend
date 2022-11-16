@@ -14,6 +14,10 @@ FROM "black-kiwi_data".poi_list as poi
 JOIN "black-kiwi_data".categories as cat on poi.category = cat.id;
 
 -- Add a new POI
+INSERT INTO "black-kiwi_data".poi_list (id, geom, name, category, rank) 
+VALUES (DEFAULT, ST_SetSRID(ST_MakePoint(-71.1043443253471, 42.3150676015829),4326), 'AjejeBa', 4, -1)
+
+-- Delete a POI
 -- TODO
 
 -- Visualizzare posizione utenti
