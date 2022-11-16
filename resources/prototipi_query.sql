@@ -20,6 +20,9 @@ VALUES (DEFAULT, ST_SetSRID(ST_MakePoint(-71.1043443253471, 42.3150676015829),43
 -- Delete a POI
 DELETE FROM "black-kiwi_data".poi_list WHERE id = 32
 
+-- Edit a POI
+UPDATE "black-kiwi_data".poi_list SET name = 'fwe', category = 4, rank = 3 WHERE id = 29
+
 -- Visualizzare posizione utenti
 SELECT *
 FROM "black-kiwi_data".requests;

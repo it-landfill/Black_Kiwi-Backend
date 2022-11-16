@@ -21,7 +21,7 @@ INSERT INTO "black-kiwi_data".poi_list (id, geom, name, category, rank) VALUES (
 func AddPOI(poi black_kiwi_data_structs.NewPoiItem) int  {
 	log.WithField("New POI", poi).Info("AddPOI query called")
 
-	catMap := getIDFromCategory()
+	catMap := black_kiwi_db_utils.GetIDFromCategory()
 
 	catID := (*catMap)[poi.Category]
 	var poiID int
@@ -34,29 +34,4 @@ func AddPOI(poi black_kiwi_data_structs.NewPoiItem) int  {
 	log.WithFields(log.Fields{"POI ID": poiID}).Debug("QueryRow succeeded while adding POI.")
 
 	return poiID
-}
-
-func getIDFromCategory() *map[black_kiwi_data_structs.Categories]int {
-
-	catMap := map[black_kiwi_data_structs.Categories]int{}
-
-	rows, err := black_kiwi_db_utils.ConnPool.Query(context.Background(), "SELECT id, name FROM \"black-kiwi_data\".categories;")
-	if err != nil {
-		log.WithFields(log.Fields{"error": err}).Error("Query failed while getting categories.")
-		return nil
-	}
-
-	for rows.Next() {
-		var categoryName string
-		var id int
-		err = rows.Scan(&id, &categoryName)
-		if err != nil {
-			log.WithFields(log.Fields{"error": err}).Error("Scan failed while getting categories.")
-			return nil
-		}
-
-		catMap[black_kiwi_db_utils.StringToCategory(categoryName)] = id
-	}
-
-	return &catMap
 }
