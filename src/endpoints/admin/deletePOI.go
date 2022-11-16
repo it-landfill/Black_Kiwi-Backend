@@ -12,7 +12,7 @@ import (
 )
 
 func DeletePOI(c *gin.Context) {
-	poiID, err := strconv.Atoi(c.DefaultQuery("limit", "-1"))
+	poiID, err := strconv.Atoi(c.DefaultQuery("poiID", "-1"))
 	if err != nil {
 		log.WithFields(log.Fields{"error": err}).Error("Error while parsing poiID in DeletePOI")
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
