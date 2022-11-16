@@ -264,7 +264,13 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/POI_Item"
+                  "type" : "object",
+                  "properties" : {
+                    "poiID" : {
+                      "type" : "integer",
+                      "description" : "ID of the new POI."
+                    }
+                  }
                 }
               }
             }
@@ -297,14 +303,7 @@
         },
         "responses" : {
           "200" : {
-            "description" : "The updated POI",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/POI_Item"
-                }
-              }
-            }
+            "description" : "The updated POI"
           },
           "400" : {
             "description" : "Bad request."
@@ -333,14 +332,7 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "The deleted POI",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/POI_Item"
-                }
-              }
-            }
+            "description" : "Operation completed with success"
           },
           "400" : {
             "description" : "Bad request."
