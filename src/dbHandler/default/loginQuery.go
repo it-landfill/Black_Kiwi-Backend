@@ -1,4 +1,4 @@
-package black_kiwi_login_queries
+package black_kiwi_default_queries
 
 import (
 	"context"

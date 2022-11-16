@@ -1,4 +1,4 @@
-package black_kiwi_login_queries
+package black_kiwi_default_queries
 
 import (
 	"context"
@@ -14,7 +14,7 @@ import (
 /*
 SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates
 FROM "black-kiwi_data".poi_list as poi
-JOIN "black-kiwi_data".categories as cat on poi.category = cat.id
+JOIN "black-kiwi_data".categories as cat on poi.category = cat.id;
 */
 func GetPOIS() (result bool, poiList *[]black_kiwi_data_structs.PoiItem)  {
 
@@ -44,27 +44,13 @@ func GetPOIS() (result bool, poiList *[]black_kiwi_data_structs.PoiItem)  {
 			return false, nil
 		}
 
-		var cat black_kiwi_data_structs.Categories
-		switch category {
-		case "Park":
-			cat = black_kiwi_data_structs.PARK
-		case "Museum":
-			cat = black_kiwi_data_structs.MUSEUM
-		case "Historical Building":
-			cat = black_kiwi_data_structs.HISTORICAL_BUILDING
-		case "Theater":
-			cat = black_kiwi_data_structs.THEATER
-		case "Department":
-			cat = black_kiwi_data_structs.DEPARTMENT
-		}
-
 		tmpLon, tmpLat := black_kiwi_db_utils.JSONtoCoordinates(coordinates)
 
 		poiItem := black_kiwi_data_structs.PoiItem{
 			Id:       id,
 			Name:     name,
 			Rank:     rank,
-			Category: cat,
+			Category: black_kiwi_db_utils.StringToCategory(category),
 			Coord: black_kiwi_data_structs.Coordinates{
 				Latitude:  tmpLat,
 				Longitude: tmpLon,

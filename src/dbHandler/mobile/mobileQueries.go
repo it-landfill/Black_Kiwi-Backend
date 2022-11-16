@@ -67,27 +67,13 @@ func GetRecommendation(minRank float64, lat float64, lon float64, category strin
 			success = false
 		}
 
-		var cat black_kiwi_data_structs.Categories
-		switch category {
-		case "Park":
-			cat = black_kiwi_data_structs.PARK
-		case "Museum":
-			cat = black_kiwi_data_structs.MUSEUM
-		case "Historical Building":
-			cat = black_kiwi_data_structs.HISTORICAL_BUILDING
-		case "Theater":
-			cat = black_kiwi_data_structs.THEATER
-		case "Department":
-			cat = black_kiwi_data_structs.DEPARTMENT
-		}
-
 		tmpLon, tmpLat := black_kiwi_db_utils.JSONtoCoordinates(coordinates)
 
 		poiItem := black_kiwi_data_structs.PoiItem{
 			Id:       id,
 			Name:     name,
 			Rank:     rank,
-			Category: cat,
+			Category: black_kiwi_db_utils.StringToCategory(category),
 			Coord: black_kiwi_data_structs.Coordinates{
 				Latitude:  tmpLat,
 				Longitude: tmpLon,

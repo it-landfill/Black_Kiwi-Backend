@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 
-	black_kiwi_login_queries "ITLandfill/Black-Kiwi/dbHandler/default"
+	"ITLandfill/Black-Kiwi/dbHandler/default"
 	"ITLandfill/Black-Kiwi/structs/data_structs"
 )
 
@@ -23,7 +23,7 @@ func GetPOIS(c *gin.Context) {
 		poiList = &black_kiwi_data_structs.MockPOIS
 		result = true
 	} else {
-		result, poiList = black_kiwi_login_queries.GetPOIS()
+		result, poiList = black_kiwi_default_queries.GetPOIS()
 	}
 
 	if !result {
@@ -32,7 +32,7 @@ func GetPOIS(c *gin.Context) {
 	}
 
 	if poiList == nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "No Pois found"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "No Pois found"})
 		return
 	}
 
