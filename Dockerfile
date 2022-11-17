@@ -1,4 +1,4 @@
-FROM golang:1.19.2
+FROM golang:1
 
 RUN mkdir -p /usr/src/goAPI
 WORKDIR /usr/src/goAPI
