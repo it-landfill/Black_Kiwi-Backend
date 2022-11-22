@@ -16,15 +16,15 @@ import (
 func GetPOIQuartieri(c *gin.Context) {	
 	log.Info("GetPOIQuartieri endpoint called")
 
-	var quartieriList *[]black_kiwi_data_structs.QuartiereInfo
+	var featureCollection string
 	var result bool
 
 	if os.Getenv("Black_Kiwi_ENV") == "dev-nodb" {
 		log.WithFields(log.Fields{"endpoint": "GetPOIQuartieri"}).Info("Endpoint called in dev-nodb mode")
-		quartieriList = &black_kiwi_data_structs.MockQuartiereInfo
+		featureCollection = black_kiwi_data_structs.MockQuartiereInfo
 		result = true
 	} else {
-		result, quartieriList = black_kiwi_admin_queries.GetPOIQuartieri()
+		result, featureCollection = black_kiwi_admin_queries.GetPOIQuartieri()
 	}
 
 	if !result {
@@ -32,10 +32,10 @@ func GetPOIQuartieri(c *gin.Context) {
 		return
 	}
 
-	if quartieriList == nil {
+	if featureCollection == "" {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "No quartieri found"})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, *quartieriList)
+	c.IndentedJSON(http.StatusOK, featureCollection)
 }
