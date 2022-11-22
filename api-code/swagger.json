@@ -570,15 +570,60 @@
       "QuartiereInfo" : {
         "type" : "object",
         "properties" : {
-          "name" : {
-            "type" : "string"
+          "type" : {
+            "type" : "string",
+            "default" : "FeatureCollection",
+            "description" : "GeoJson type, will ALWAYS be FeatureCollection\n"
           },
-          "density" : {
-            "type" : "number",
-            "example" : 15
-          },
-          "geom" : {
-            "type" : "string"
+          "features" : {
+            "type" : "array",
+            "description" : "Each element is a GeoJSON feature, in this project a city block.\n",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "type" : {
+                  "type" : "string",
+                  "default" : "Feature",
+                  "description" : "GeoJson type, will ALWAYS be Feature\n"
+                },
+                "properties" : {
+                  "type" : "object",
+                  "properties" : {
+                    "name" : {
+                      "type" : "string"
+                    },
+                    "value" : {
+                      "type" : "integer"
+                    }
+                  }
+                },
+                "geometry" : {
+                  "type" : "object",
+                  "properties" : {
+                    "type" : {
+                      "type" : "string",
+                      "description" : "GeoJson type, should be Polygon\n"
+                    },
+                    "coordinates" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "array",
+                          "example" : [ 11.343083381652832, 44.49433189374523 ],
+                          "items" : {
+                            "type" : "number",
+                            "format" : "double",
+                            "description" : "Two values representing longitude and latitude of a point\n"
+                          },
+                          "description" : "Each interal array is a couple of coordinates in the format longitude, latitude\n"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
