@@ -5,6 +5,10 @@ services:
     - infinity
     image: docker/dev-environments-go:stable-1
     init: true
+    ports:
+      - 8080:8080
+    environment:
+      - Black_Kiwi_ENV=dev
     volumes:
     - type: bind
       source: /var/run/docker.sock
