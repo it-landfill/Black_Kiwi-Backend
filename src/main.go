@@ -65,6 +65,7 @@ func createEngine() *gin.Engine {
 	engine.GET("/pois", black_kiwi_default.GetPOIS)
 	engine.GET("/pois/:id", black_kiwi_default.GetPOI)
 	engine.POST("/login", black_kiwi_default.PostLogin)
+	engine.POST("/logout", black_kiwi_default.PostLogout)
 
 	// Admin
 	admin := engine.Group("/admin")
