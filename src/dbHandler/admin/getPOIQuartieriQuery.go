@@ -12,16 +12,16 @@ import (
 
 /*
 SELECT json_build_object('type', 'FeatureCollection', 'features', json_agg(ST_AsGeoJSON(quartieri.*)::json))
-FROM (SELECT quartieri.nomequart as name, quartieri.geom, count(poi.id) as value
-      FROM "black-kiwi_data"."quartieri-bologna" as quartieri
-               JOIN "black-kiwi_data".poi_list as poi on st_within(poi.geom, quartieri.geom)
-      GROUP BY quartieri.nomequart, quartieri.geom) as quartieri;
+FROM (SELECT quartieri.name as name, quartieri.geom, count(poi.id) as value
+      FROM "black-kiwi_data"."Quartieri" as quartieri
+               JOIN "black-kiwi_data"."Pois" as poi on st_within(poi.geom, quartieri.geom)
+      GROUP BY quartieri.name, quartieri.geom) as quartieri;
 
-SELECT json_build_object('type', 'FeatureCollection', 'features', json_agg(ST_AsGeoJSON(quartieri.*)::json)) FROM (SELECT quartieri.nomequart as name, quartieri.geom, count(poi.id) as value FROM "black-kiwi_data"."quartieri-bologna" as quartieri JOIN "black-kiwi_data".poi_list as poi on st_within(poi.geom, quartieri.geom) GROUP BY quartieri.nomequart, quartieri.geom) as quartieri;
+SELECT json_build_object('type', 'FeatureCollection', 'features', json_agg(ST_AsGeoJSON(quartieri.*)::json)) FROM (SELECT quartieri.name as name, quartieri.geom, count(poi.id) as value FROM "black-kiwi_data"."Quartieri" as quartieri JOIN "black-kiwi_data"."Pois" as poi on st_within(poi.geom, quartieri.geom) GROUP BY quartieri.name, quartieri.geom) as quartieri;
 */
 func GetPOIQuartieri() (result bool, featureCollection string)  {
 
-	err := black_kiwi_db_utils.ConnPool.QueryRow(context.Background(), "SELECT json_build_object('type', 'FeatureCollection', 'features', json_agg(ST_AsGeoJSON(quartieri.*)::json)) FROM (SELECT quartieri.nomequart as name, quartieri.geom, count(poi.id) as value FROM \"black-kiwi_data\".\"quartieri-bologna\" as quartieri JOIN \"black-kiwi_data\".poi_list as poi on st_within(poi.geom, quartieri.geom) GROUP BY quartieri.nomequart, quartieri.geom) as quartieri;").Scan(&featureCollection)
+	err := black_kiwi_db_utils.ConnPool.QueryRow(context.Background(), "SELECT json_build_object('type', 'FeatureCollection', 'features', json_agg(ST_AsGeoJSON(quartieri.*)::json)) FROM (SELECT quartieri.name as name, quartieri.geom, count(poi.id) as value FROM \"black-kiwi_data\".\"Quartieri\" as quartieri JOIN \"black-kiwi_data\".\"Pois\" as poi on st_within(poi.geom, quartieri.geom) GROUP BY quartieri.name, quartieri.geom) as quartieri;").Scan(&featureCollection)
 	if err != nil {
 		log.WithFields(log.Fields{"error":err}).Error("QueryRow failed for get POI quartieri.")
 		return false, ""
