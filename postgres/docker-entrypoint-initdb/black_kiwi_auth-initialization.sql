@@ -30,5 +30,10 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE "black-kiwi_authentication"."Users" T
 INSERT INTO "black-kiwi_authentication"."Roles" (id, name) VALUES (1, 'user');
 INSERT INTO "black-kiwi_authentication"."Roles" (id, name) VALUES (2, 'admin');
 
+SELECT pg_catalog.setval('"black-kiwi_authentication"."Roles_id_seq"', 2, true);
+
+
 INSERT INTO "black-kiwi_authentication"."Users" VALUES (1, 'testUser', 'testUser', 1);
 INSERT INTO "black-kiwi_authentication"."Users" VALUES (2, 'testAdmin', 'testAdmin', 2);
+
+SELECT pg_catalog.setval('"black-kiwi_authentication"."Users_id_seq"', 2, true);
