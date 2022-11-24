@@ -70,12 +70,15 @@ func createEngine() *gin.Engine {
 	// Admin
 	admin := engine.Group("/admin")
 	admin.Use(AdminRequired)
-	admin.GET("/getRequestLocations", black_kiwi_admin.GetRequestLocations)
-	admin.GET("/getPOIQuartieri", black_kiwi_admin.GetPOIQuartieri)
-	admin.GET("/getCheckinQuartieri", black_kiwi_admin.GetCheckinQuartieri)
+	// POI management
 	admin.POST("/newPOI", black_kiwi_admin.PostNewPOI)
 	admin.POST("/editPOI", black_kiwi_admin.EditPOI)
 	admin.DELETE("/deletePOI", black_kiwi_admin.DeletePOI)
+	// Data analytics
+	admin.GET("/getRequestLocations", black_kiwi_admin.GetRequestLocations)
+	admin.GET("/getPOIQuartieri", black_kiwi_admin.GetPOIQuartieri)
+	admin.GET("/getCheckinQuartieri", black_kiwi_admin.GetCheckinQuartieri)
+	admin.GET("/getQuartieri", black_kiwi_admin.GetCheckinQuartieri)
 
 	// Mobile
 	mobile := engine.Group("/mobile")
