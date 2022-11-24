@@ -7,12 +7,25 @@ services:
     init: true
     ports:
       - 8080:8080
-    environment:
-      - Black_Kiwi_ENV=dev
+    networks:
+      - default
+      - backend
     volumes:
     - type: bind
       source: /var/run/docker.sock
       target: /var/run/docker.sock
+  postgis:
+    container_name: postgis
+    image: aleben/itlandfill-cas-postgis-preloaded:latest
+    restart: on-failure
+    networks:
+      - backend
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=black-kiwi_administrator
+      - POSTGRES_PASSWORD=6whuUYTEhyA2ShR35
+      - POSTGRES_DB=black-kiwi
   public_postgis:
     container_name: public_postgis
     image: aleben/itlandfill-cas-postgis-preloaded:latest
@@ -25,6 +38,12 @@ services:
       - POSTGRES_USER=black-kiwi_administrator
       - POSTGRES_PASSWORD=6whuUYTEhyA2ShR35
       - POSTGRES_DB=black-kiwi
+
+networks:
+  backend:
+    name: black-kiwi-backend
+    internal: true
+  default:
 
 volumes:
   postgres_data: 
