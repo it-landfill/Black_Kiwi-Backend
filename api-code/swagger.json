@@ -346,6 +346,36 @@
         }
       }
     },
+    "/admin/getPOIQuartieri" : {
+      "get" : {
+        "summary" : "Return POI distribution based on quartieri.",
+        "responses" : {
+          "200" : {
+            "description" : "Count of the POI divided by quartiere",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/QuartiereInfo"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        },
+        "tags" : [ "administration" ]
+      }
+    },
     "/admin/getRequestLocations" : {
       "get" : {
         "summary" : "Return the location of the requests",
@@ -391,12 +421,12 @@
         "tags" : [ "administration" ]
       }
     },
-    "/admin/getPOIQuartieri" : {
+    "/admin/getRequestQuartieri" : {
       "get" : {
-        "summary" : "Return POI distribution based on quartieri.",
+        "summary" : "Return requests distribution based on quartieri.",
         "responses" : {
           "200" : {
-            "description" : "Count of the POI divided by quartiere",
+            "description" : "Count of all logins divided by quartiere",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -421,12 +451,12 @@
         "tags" : [ "administration" ]
       }
     },
-    "/admin/getCheckinQuartieri" : {
+    "/admin/getQuartieri" : {
       "get" : {
-        "summary" : "Return checkin distribution based on quartieri.",
+        "summary" : "Return quartieri geometry.",
         "responses" : {
           "200" : {
-            "description" : "Count of all logins divided by quartiere",
+            "description" : "Return the geometry of the city blocks.",
             "content" : {
               "application/json" : {
                 "schema" : {
