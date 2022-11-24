@@ -87,7 +87,7 @@ func createEngine() *gin.Engine {
 	// Data analytics
 	admin.GET("/getRequestLocations", black_kiwi_admin.GetRequestLocations)
 	admin.GET("/getPOIQuartieri", black_kiwi_admin.GetPOIQuartieri)
-	admin.GET("/getCheckinQuartieri", black_kiwi_admin.GetCheckinQuartieri)
+	admin.GET("/getRequestQuartieri", black_kiwi_admin.GetRequestQuartieri)
 	admin.GET("/getQuartieri", black_kiwi_admin.GetCheckinQuartieri)
 
 	// Mobile
