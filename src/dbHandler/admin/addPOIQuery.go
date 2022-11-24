@@ -12,11 +12,11 @@ import (
 //https://app.swaggerhub.com/apis/ITLandfill/Black-Kiwi/1.0.2
 
 /*
-INSERT INTO "black-kiwi_data".poi_list (id, geom, name, category, rank) 
-VALUES (DEFAULT, ST_SetSRID(ST_MakePoint(-71.1043443253471, 42.3150676015829),4326), 'AjejeBa', 4, -1)
+INSERT INTO "black-kiwi_data"."Pois" (id, name, category, rank, geom)
+VALUES (DEFAULT, 'AjejeBa', 4, -1, ST_SetSRID(ST_MakePoint(-71.1043443253471, 42.3150676015829),4326))
 RETURNING "id";
 
-INSERT INTO "black-kiwi_data".poi_list (id, geom, name, category, rank) VALUES (DEFAULT, ST_SetSRID(ST_MakePoint(-71.1043443253471, 42.3150676015829),4326), 'AjejeBa', 4, -1) RETURNING "id";
+INSERT INTO "black-kiwi_data"."Pois" (id, name, category, rank, geom) VALUES (DEFAULT, $3, $4, $5, ST_SetSRID(ST_MakePoint($1, $2),4326)) RETURNING "id";
 */
 func AddPOI(poi black_kiwi_data_structs.NewPoiItem) int  {
 	log.WithField("New POI", poi).Info("AddPOI query called")
@@ -25,7 +25,7 @@ func AddPOI(poi black_kiwi_data_structs.NewPoiItem) int  {
 
 	catID := (*catMap)[poi.Category]
 	var poiID int
-	err := black_kiwi_db_utils.ConnPool.QueryRow(context.Background(), "INSERT INTO \"black-kiwi_data\".poi_list (id, geom, name, category, rank) VALUES (DEFAULT, ST_SetSRID(ST_MakePoint($1, $2),4326), $3, $4, $5) RETURNING \"id\";", poi.Coord.Longitude, poi.Coord.Latitude, poi.Name, catID, poi.Rank).Scan(&poiID)
+	err := black_kiwi_db_utils.ConnPool.QueryRow(context.Background(), "INSERT INTO \"black-kiwi_data\".\"Pois\" (id, name, category, rank, geom) VALUES (DEFAULT, $3, $4, $5, ST_SetSRID(ST_MakePoint($1, $2),4326)) RETURNING \"id\";", poi.Coord.Longitude, poi.Coord.Latitude, poi.Name, catID, poi.Rank).Scan(&poiID)
 	if err != nil {
 		log.WithFields(log.Fields{"error": err}).Error("QueryRow failed while adding POI.")
 		return -1

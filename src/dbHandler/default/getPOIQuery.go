@@ -13,11 +13,11 @@ import (
 
 /*
 SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates
-FROM "black-kiwi_data".poi_list as poi
-JOIN "black-kiwi_data".categories as cat on poi.category = cat.id
+FROM "black-kiwi_data"."Pois" as poi
+JOIN "black-kiwi_data"."Categories" as cat on poi.category = cat.id
 WHERE poi.id = $1;
 
-SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates FROM "black-kiwi_data".poi_list as poi JOIN "black-kiwi_data".categories as cat on poi.category = cat.id WHERE poi.id = $1;
+SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates FROM "black-kiwi_data"."Pois" as poi JOIN "black-kiwi_data"."Categories" as cat on poi.category = cat.id WHERE poi.id = $1;
 */
 func GetPOI(poiID int) (result bool, poiList *black_kiwi_data_structs.PoiItem) {
 
@@ -26,7 +26,7 @@ func GetPOI(poiID int) (result bool, poiList *black_kiwi_data_structs.PoiItem) {
 	var rank float32
 	var category string
 	var coordinates string
-	err := black_kiwi_db_utils.ConnPool.QueryRow(context.Background(), "SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates FROM \"black-kiwi_data\".poi_list as poi JOIN \"black-kiwi_data\".categories as cat on poi.category = cat.id WHERE poi.id = $1;", poiID).Scan(&id, &name, &rank, &category, &coordinates)
+	err := black_kiwi_db_utils.ConnPool.QueryRow(context.Background(), "SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates FROM \"black-kiwi_data\".\"Pois\" as poi JOIN \"black-kiwi_data\".\"Categories\" as cat on poi.category = cat.id WHERE poi.id = $1;", poiID).Scan(&id, &name, &rank, &category, &coordinates)
 	if err != nil {
 		if err.Error() == "no rows in result set" {
 			log.WithFields(log.Fields{"POI ID": poiID, "error": err}).Info("No POI with specified ID found in db.")
