@@ -41,7 +41,7 @@ func GetIDFromCategory() *map[black_kiwi_data_structs.Categories]int {
 
 	catMap := map[black_kiwi_data_structs.Categories]int{}
 
-	rows, err := ConnPool.Query(context.Background(), "SELECT id, name FROM \"black-kiwi_data\".categories;")
+	rows, err := ConnPool.Query(context.Background(), "SELECT id, name FROM \"black-kiwi_data\".\"Categories\";")
 	if err != nil {
 		log.WithFields(log.Fields{"error": err}).Error("Query failed while getting categories.")
 		return nil

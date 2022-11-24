@@ -20,7 +20,7 @@ func GetUser(username string, password string) (result bool ,user *black_kiwi_au
 
 	var user_name string
 	var role int8
-	err := black_kiwi_db_utils.ConnPool.QueryRow(context.Background(),  "SELECT username, role FROM \"black-kiwi_authentication\".Users WHERE username=$1 and password=$2;", username, password).Scan(&user_name, &role)
+	err := black_kiwi_db_utils.ConnPool.QueryRow(context.Background(),  "SELECT username, role FROM \"black-kiwi_authentication\".\"Users\" WHERE username=$1 and password=$2;", username, password).Scan(&user_name, &role)
 	if err != nil {
 		if (err.Error() == "no rows in result set") {
 			log.WithFields(log.Fields{"username": username, "error":err}).Info("No user found in db.")
