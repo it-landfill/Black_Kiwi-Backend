@@ -25,6 +25,10 @@ func main() {
 		log.WithFields(log.Fields{"Black_Kiwi_ENV": os.Getenv("Black_Kiwi_ENV")}).Info("Black_Kiwi_ENV is set")
 	}
 
+	if os.Getenv("Black_Kiwi_no_login") != "" {
+		log.Warn("Black_Kiwi_no_login is set, the server will not require authentication")
+	}
+
 	if os.Getenv("Black_Kiwi_ENV") != "dev" && os.Getenv("Black_Kiwi_ENV") != "dev-nodb" {
 		gin.SetMode(gin.ReleaseMode)
 	} else {
@@ -69,7 +73,9 @@ func createEngine() *gin.Engine {
 
 	// Admin
 	admin := engine.Group("/admin")
-	admin.Use(AdminRequired)
+	if os.Getenv("Black_Kiwi_no_login") == "" {
+		admin.Use(AdminRequired)
+	}
 	// POI management
 	admin.POST("/newPOI", black_kiwi_admin.PostNewPOI)
 	admin.POST("/editPOI", black_kiwi_admin.EditPOI)
@@ -82,7 +88,9 @@ func createEngine() *gin.Engine {
 
 	// Mobile
 	mobile := engine.Group("/mobile")
-	mobile.Use(UserRequired)
+	if os.Getenv("Black_Kiwi_no_login") == "" {
+		mobile.Use(UserRequired)
+	}
 	mobile.GET("/getRecommendation", black_kiwi_mobile.GetRecommendation)
 	mobile.GET("/testAuth", func(c *gin.Context) {
 		c.JSON(http.StatusOK, "Ok")
