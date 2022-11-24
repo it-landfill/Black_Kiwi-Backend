@@ -26,7 +26,5 @@ func GetQuartieri() (result bool, featureCollection string)  {
 		return false, ""
 	}
 
-	log.Warn(featureCollection)
-
 	return true, featureCollection
 }

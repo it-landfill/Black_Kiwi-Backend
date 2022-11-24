@@ -27,7 +27,5 @@ func GetPOIQuartieri() (result bool, featureCollection string)  {
 		return false, ""
 	}
 
-	log.Warn(featureCollection)
-
 	return true, featureCollection
 }
