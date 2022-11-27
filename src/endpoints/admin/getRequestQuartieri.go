@@ -13,18 +13,18 @@ import (
 )
 
 // getAlbums responds with the list of all albums as JSON.
-func GetPOIQuartieri(c *gin.Context) {	
-	log.Info("GetPOIQuartieri endpoint called")
-
+func GetRequestQuartieri(c *gin.Context) {
+	log.Info("GetRequestQuartieri endpoint called")
+	
 	var featureCollection string
 	var result bool
 
 	if os.Getenv("Black_Kiwi_ENV") == "dev-nodb" {
-		log.WithFields(log.Fields{"endpoint": "GetPOIQuartieri"}).Info("Endpoint called in dev-nodb mode")
+		log.WithFields(log.Fields{"endpoint": "GetRequestQuartieri"}).Info("Endpoint called in dev-nodb mode")
 		featureCollection = black_kiwi_data_structs.MockQuartiereInfo
 		result = true
 	} else {
-		result, featureCollection = black_kiwi_admin_queries.GetPOIQuartieri()
+		result, featureCollection = black_kiwi_admin_queries.GetRequestQuartieri()
 	}
 
 	if !result {
@@ -39,3 +39,4 @@ func GetPOIQuartieri(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusOK, featureCollection)
 }
+	

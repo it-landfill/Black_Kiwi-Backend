@@ -36,7 +36,7 @@ func PostLogin(c *gin.Context) {
 		success = true
 		user = &black_kiwi_auth_structs.MockUsers[0]
 	} else {
-		success, user = black_kiwi_login_queries.GetUser(username, password)
+		success, user = black_kiwi_default_queries.GetUser(username, password)
 	}
 
 	if !success {

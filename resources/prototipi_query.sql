@@ -14,18 +14,25 @@ FROM "black-kiwi_data".poi_list as poi
 JOIN "black-kiwi_data".categories as cat on poi.category = cat.id;
 
 -- Add a new POI
--- TODO
+INSERT INTO "black-kiwi_data".poi_list (id, geom, name, category, rank) 
+VALUES (DEFAULT, ST_SetSRID(ST_MakePoint(-71.1043443253471, 42.3150676015829),4326), 'AjejeBa', 4, -1)
+
+-- Delete a POI
+DELETE FROM "black-kiwi_data".poi_list WHERE id = 32
+
+-- Edit a POI
+UPDATE "black-kiwi_data".poi_list SET name = 'fwe', category = 4, rank = 3 WHERE id = 29
 
 -- Visualizzare posizione utenti
 SELECT *
 FROM "black-kiwi_data".requests;
 
 -- Visualizzare quartieri colorati su base di poi in esso contenuti
-SELECT quartieri.nomequart, quartieri.geom, count(poi.name) as poi_density
-FROM "black-kiwi_data".poi_list as poi
-JOIN "black-kiwi_data"."quartieri-bologna" as quartieri on st_within(poi.geom, quartieri.geom)
-GROUP BY quartieri.nomequart, quartieri.geom;
-
+SELECT json_build_object('type', 'FeatureCollection', 'features', json_agg(ST_AsGeoJSON(quartieri.*)::json))
+FROM (SELECT quartieri.nomequart as name, quartieri.geom, count(poi.id) as value
+      FROM "black-kiwi_data"."quartieri-bologna" as quartieri
+               JOIN "black-kiwi_data".poi_list as poi on st_within(poi.geom, quartieri.geom)
+      GROUP BY quartieri.nomequart, quartieri.geom) as quartieri;
 -- Visualizzare quartieri colorati su base di checkin utenti
 -- TODO
 

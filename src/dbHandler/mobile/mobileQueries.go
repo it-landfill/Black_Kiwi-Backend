@@ -13,6 +13,7 @@ import (
 //https://app.swaggerhub.com/apis/ITLandfill/Black-Kiwi/1.0.2
 
 /*
+FIXME: Re generate query with new scheme
 SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates, st_distance(poi.geom,st_geogfromtext('POINT(11.3428 44.4939)')) as meters
 FROM "black-kiwi_data".poi_list as poi
 JOIN "black-kiwi_data".categories as cat on poi.category = cat.id
@@ -67,27 +68,13 @@ func GetRecommendation(minRank float64, lat float64, lon float64, category strin
 			success = false
 		}
 
-		var cat black_kiwi_data_structs.Categories
-		switch category {
-		case "Park":
-			cat = black_kiwi_data_structs.PARK
-		case "Museum":
-			cat = black_kiwi_data_structs.MUSEUM
-		case "Historical Building":
-			cat = black_kiwi_data_structs.HISTORICAL_BUILDING
-		case "Theater":
-			cat = black_kiwi_data_structs.THEATER
-		case "Department":
-			cat = black_kiwi_data_structs.DEPARTMENT
-		}
-
 		tmpLon, tmpLat := black_kiwi_db_utils.JSONtoCoordinates(coordinates)
 
 		poiItem := black_kiwi_data_structs.PoiItem{
 			Id:       id,
 			Name:     name,
 			Rank:     rank,
-			Category: cat,
+			Category: black_kiwi_db_utils.StringToCategory(category),
 			Coord: black_kiwi_data_structs.Coordinates{
 				Latitude:  tmpLat,
 				Longitude: tmpLon,

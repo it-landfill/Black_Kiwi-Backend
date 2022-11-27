@@ -25,6 +25,10 @@ func main() {
 		log.WithFields(log.Fields{"Black_Kiwi_ENV": os.Getenv("Black_Kiwi_ENV")}).Info("Black_Kiwi_ENV is set")
 	}
 
+	if os.Getenv("Black_Kiwi_no_login") != "" {
+		log.Warn("Black_Kiwi_no_login is set, the server will not require authentication")
+	}
+
 	if os.Getenv("Black_Kiwi_ENV") != "dev" && os.Getenv("Black_Kiwi_ENV") != "dev-nodb" {
 		gin.SetMode(gin.ReleaseMode)
 	} else {
@@ -65,18 +69,28 @@ func createEngine() *gin.Engine {
 	engine.GET("/pois", black_kiwi_default.GetPOIS)
 	engine.GET("/pois/:id", black_kiwi_default.GetPOI)
 	engine.POST("/login", black_kiwi_default.PostLogin)
+	engine.POST("/logout", black_kiwi_default.PostLogout)
 
 	// Admin
 	admin := engine.Group("/admin")
-	admin.Use(AdminRequired)
+	if os.Getenv("Black_Kiwi_no_login") == "" {
+		admin.Use(AdminRequired)
+	}
+	// POI management
+	admin.POST("/newPOI", black_kiwi_admin.PostNewPOI)
+	admin.POST("/editPOI", black_kiwi_admin.EditPOI)
+	admin.DELETE("/deletePOI", black_kiwi_admin.DeletePOI)
+	// Data analytics
 	admin.GET("/getRequestLocations", black_kiwi_admin.GetRequestLocations)
 	admin.GET("/getPOIQuartieri", black_kiwi_admin.GetPOIQuartieri)
-	admin.GET("/getCheckinQuartieri", black_kiwi_admin.GetCheckinQuartieri)
-	admin.POST("/newPOI", black_kiwi_admin.PostNewPOI)
+	admin.GET("/getRequestQuartieri", black_kiwi_admin.GetRequestQuartieri)
+	admin.GET("/getQuartieri", black_kiwi_admin.GetQuartieri)
 
 	// Mobile
 	mobile := engine.Group("/mobile")
-	mobile.Use(UserRequired)
+	if os.Getenv("Black_Kiwi_no_login") == "" {
+		mobile.Use(UserRequired)
+	}
 	mobile.GET("/getRecommendation", black_kiwi_mobile.GetRecommendation)
 	mobile.GET("/testAuth", func(c *gin.Context) {
 		c.JSON(http.StatusOK, "Ok")
