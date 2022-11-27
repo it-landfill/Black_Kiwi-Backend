@@ -2,14 +2,14 @@
   "openapi" : "3.0.0",
   "servers" : [ {
     "description" : "SwaggerHub API Auto Mocking",
-    "url" : "https://virtserver.swaggerhub.com/ITLandfill/Black-Kiwi/1.0.4"
+    "url" : "https://virtserver.swaggerhub.com/ITLandfill/Black-Kiwi/1.0.5"
   }, {
     "description" : "Black-Kiwi  servr",
     "url" : "http://casadiale.noip.me:62950"
   } ],
   "info" : {
     "description" : "API used for the Context Aware System course @ Università degli studi di Bologna a.a. 2021/2022.\nITLandfill group\n",
-    "version" : "1.0.4",
+    "version" : "1.0.5",
     "title" : "Black-Kiwi API",
     "contact" : {
       "email" : "alessandro.benetton@studio.unibo.it",
@@ -79,6 +79,25 @@
                 }
               }
             }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/logout" : {
+      "post" : {
+        "summary" : "Logout the user",
+        "responses" : {
+          "200" : {
+            "description" : "Logout succeded"
           },
           "400" : {
             "description" : "Bad request."
@@ -245,7 +264,13 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/POI_Item"
+                  "type" : "object",
+                  "properties" : {
+                    "poiID" : {
+                      "type" : "integer",
+                      "description" : "ID of the new POI."
+                    }
+                  }
                 }
               }
             }
@@ -278,14 +303,7 @@
         },
         "responses" : {
           "200" : {
-            "description" : "The updated POI",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/POI_Item"
-                }
-              }
-            }
+            "description" : "The updated POI"
           },
           "400" : {
             "description" : "Bad request."
@@ -314,14 +332,7 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "The deleted POI",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/POI_Item"
-                }
-              }
-            }
+            "description" : "Operation completed with success"
           },
           "400" : {
             "description" : "Bad request."
@@ -333,51 +344,6 @@
             "description" : "Internal server error."
           }
         }
-      }
-    },
-    "/admin/getRequestLocations" : {
-      "get" : {
-        "summary" : "Return the location of the requests",
-        "parameters" : [ {
-          "in" : "query",
-          "name" : "from",
-          "schema" : {
-            "type" : "string",
-            "format" : "date-time"
-          }
-        }, {
-          "in" : "query",
-          "name" : "to",
-          "schema" : {
-            "type" : "string",
-            "format" : "date-time"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "List of all request locations",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/RequestInfo"
-                  }
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request."
-          },
-          "401" : {
-            "description" : "Authorization information is missing or invalid."
-          },
-          "500" : {
-            "description" : "Internal server error."
-          }
-        },
-        "tags" : [ "administration" ]
       }
     },
     "/admin/getPOIQuartieri" : {
@@ -410,12 +376,89 @@
         "tags" : [ "administration" ]
       }
     },
-    "/admin/getCheckinQuartieri" : {
+    "/admin/getRequestLocations" : {
       "get" : {
-        "summary" : "Return checkin distribution based on quartieri.",
+        "summary" : "Return the location of the requests",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "from",
+          "schema" : {
+            "type" : "string",
+            "format" : "date",
+            "example" : "2022-11-26"
+          }
+        }, {
+          "in" : "query",
+          "name" : "to",
+          "schema" : {
+            "type" : "string",
+            "format" : "date",
+            "example" : "2022-12-10"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of all request locations",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/RequestInfo"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        },
+        "tags" : [ "administration" ]
+      }
+    },
+    "/admin/getRequestQuartieri" : {
+      "get" : {
+        "summary" : "Return requests distribution based on quartieri.",
         "responses" : {
           "200" : {
             "description" : "Count of all logins divided by quartiere",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/QuartiereInfo"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        },
+        "tags" : [ "administration" ]
+      }
+    },
+    "/admin/getQuartieri" : {
+      "get" : {
+        "summary" : "Return quartieri geometry.",
+        "responses" : {
+          "200" : {
+            "description" : "Return the geometry of the city blocks.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -559,15 +602,60 @@
       "QuartiereInfo" : {
         "type" : "object",
         "properties" : {
-          "name" : {
-            "type" : "string"
+          "type" : {
+            "type" : "string",
+            "default" : "FeatureCollection",
+            "description" : "GeoJson type, will ALWAYS be FeatureCollection\n"
           },
-          "density" : {
-            "type" : "number",
-            "example" : 15
-          },
-          "geom" : {
-            "type" : "string"
+          "features" : {
+            "type" : "array",
+            "description" : "Each element is a GeoJSON feature, in this project a city block.\n",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "type" : {
+                  "type" : "string",
+                  "default" : "Feature",
+                  "description" : "GeoJson type, will ALWAYS be Feature\n"
+                },
+                "properties" : {
+                  "type" : "object",
+                  "properties" : {
+                    "name" : {
+                      "type" : "string"
+                    },
+                    "value" : {
+                      "type" : "integer"
+                    }
+                  }
+                },
+                "geometry" : {
+                  "type" : "object",
+                  "properties" : {
+                    "type" : {
+                      "type" : "string",
+                      "description" : "GeoJson type, should be Polygon\n"
+                    },
+                    "coordinates" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "array",
+                          "example" : [ 11.343083381652832, 44.49433189374523 ],
+                          "items" : {
+                            "type" : "number",
+                            "format" : "double",
+                            "description" : "Two values representing longitude and latitude of a point\n"
+                          },
+                          "description" : "Each interal array is a couple of coordinates in the format longitude, latitude\n"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
