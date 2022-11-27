@@ -384,14 +384,16 @@
           "name" : "from",
           "schema" : {
             "type" : "string",
-            "format" : "date"
+            "format" : "date",
+            "example" : "2022-11-26"
           }
         }, {
           "in" : "query",
           "name" : "to",
           "schema" : {
             "type" : "string",
-            "format" : "date"
+            "format" : "date",
+            "example" : "2022-12-10"
           }
         } ],
         "responses" : {
