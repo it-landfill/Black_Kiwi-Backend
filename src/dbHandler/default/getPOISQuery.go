@@ -13,12 +13,14 @@ import (
 
 /*
 SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates
-FROM "black-kiwi_data".poi_list as poi
-JOIN "black-kiwi_data".categories as cat on poi.category = cat.id;
+FROM "black-kiwi_data"."Pois" as poi
+JOIN "black-kiwi_data"."Categories" as cat on poi.category = cat.id;
+
+SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates FROM "black-kiwi_data"."Pois" as poi JOIN "black-kiwi_data"."Categories" as cat on poi.category = cat.id;
 */
 func GetPOIS() (result bool, poiList *[]black_kiwi_data_structs.PoiItem)  {
 
-	rows, err := black_kiwi_db_utils.ConnPool.Query(context.Background(), "SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates FROM \"black-kiwi_data\".poi_list as poi JOIN \"black-kiwi_data\".categories as cat on poi.category = cat.id")
+	rows, err := black_kiwi_db_utils.ConnPool.Query(context.Background(), "SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates FROM \"black-kiwi_data\".\"Pois\" as poi JOIN \"black-kiwi_data\".\"Categories\" as cat on poi.category = cat.id;")
 	if err != nil {
 		log.WithFields(log.Fields{"error":err}).Error("QueryRow failed for get POIS.")
 		return false, nil

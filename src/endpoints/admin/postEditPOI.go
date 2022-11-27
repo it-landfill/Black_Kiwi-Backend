@@ -2,12 +2,15 @@ package black_kiwi_admin
 
 import (
 	"net/http"
+	"os"
+
 
 	"github.com/gin-gonic/gin"
 
 	log "github.com/sirupsen/logrus"
 
 	"ITLandfill/Black-Kiwi/structs/data_structs"
+	"ITLandfill/Black-Kiwi/dbHandler/admin"
 )
 
 // getAlbums responds with the list of all albums as JSON.
@@ -21,7 +24,19 @@ func EditPOI(c *gin.Context) {
 		return
 	}
 
-	log.WithFields(log.Fields{"endpoint": "EditPOI", "body": body}).Info("Edit POI endpoint called")
+	log.WithFields(log.Fields{"endpoint": "EditPOI", "new POI": body}).Info("Edit POI endpoint called")
 
-	c.IndentedJSON(http.StatusOK, body)
+	var success bool
+	if os.Getenv("Black_Kiwi_ENV") == "dev-nodb" {
+		success = true
+	} else {
+		success = black_kiwi_admin_queries.EditPOI(body)
+	}
+
+	if !success {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error while deleting POI"})
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{"success": true})
 }
