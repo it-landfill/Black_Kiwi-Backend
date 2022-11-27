@@ -19,10 +19,6 @@ import (
 	"ITLandfill/Black-Kiwi/dbHandler/utils"
 )
 
-/*
-TODO: Implement queries for getRequestLocation and getCheckinQuartieri
-*/
-
 func main() {
 
 	if os.Getenv("Black_Kiwi_ENV") != "" {

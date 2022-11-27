@@ -21,7 +21,8 @@ WHERE req.timestamp > timestamp '2022-10-01' and req.timestamp < timestamp '2022
 
 SELECT timestamp, cat.name, rank, st_asgeojson(req.geom) as coordinates FROM "black-kiwi_data"."Requests" as req JOIN "black-kiwi_data"."Categories" as cat on req.category = cat.id WHERE req.timestamp > timestamp '2022-10-01' and req.timestamp < timestamp '2022-11-01';
 */
-func GetRequestLocation(startDate *time.Time, endDate *time.Time) (result bool, poiList *[]black_kiwi_data_structs.RequestInfo)  {
+func GetRequestLocation(startDate *time.Time, endDate *time.Time) (result bool, reqList *[]black_kiwi_data_structs.RequestInfo)  {
+	log.WithFields(log.Fields{"startDate": startDate, "endDate": endDate}).Info("GetRequestLocationQuery called")
 
 	queryStr := "SELECT timestamp, cat.name, rank, st_asgeojson(req.geom) as coordinates FROM \"black-kiwi_data\".\"Requests\" as req JOIN \"black-kiwi_data\".\"Categories\" as cat on req.category = cat.id"
 	if startDate != nil && endDate != nil {
