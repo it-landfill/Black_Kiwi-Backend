@@ -9,14 +9,14 @@ import (
 )
 
 /*
-INSERT INTO "black-kiwi_data"."Requests" (id, timestamp, category, rank, geom) VALUES (DEFAULT, DEFAULT, $1, $2, ST_SetSRID(ST_MakePoint($3, $4),4326)))
+INSERT INTO "black-kiwi_data"."Requests" (id, timestamp, category, rank, geom) VALUES (DEFAULT, DEFAULT, $1, $2, ST_SetSRID(ST_MakePoint($3, $4),4326))
 */
 func SaveRequest(minRank float64, lat float64, lon float64, category string) bool {
 	log.WithFields(log.Fields{"minRank": minRank, "lat": lat, "lon": lon, "category": category}).Info("SaveRequest query called")
 
 	catID := (*black_kiwi_db_utils.CatMap)[black_kiwi_db_utils.StringToCategory(category)]
 
-	_, err := black_kiwi_db_utils.ConnPool.Exec(context.Background(), "INSERT INTO \"black-kiwi_data\".\"Requests\" (id, timestamp, category, rank, geom) VALUES (DEFAULT, DEFAULT, $1, $2, ST_SetSRID(ST_MakePoint($3, $4),4326)));", catID, minRank, lon, lat)
+	_, err := black_kiwi_db_utils.ConnPool.Exec(context.Background(), "INSERT INTO \"black-kiwi_data\".\"Requests\" (id, timestamp, category, rank, geom) VALUES (DEFAULT, DEFAULT, $1, $2, ST_SetSRID(ST_MakePoint($3, $4),4326));", catID, minRank, lon, lat)
 	if err != nil {
 		log.WithFields(log.Fields{"error": err}).Error("Exec failed while saving request.")
 		return false
