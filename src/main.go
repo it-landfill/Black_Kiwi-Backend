@@ -38,6 +38,7 @@ func main() {
 	if os.Getenv("Black_Kiwi_ENV") != "dev-nodb" {
 		// Init DB connection
 		black_kiwi_db_utils.ConnPool = black_kiwi_db_handler.InitConnectionPool()
+		black_kiwi_db_utils.CatMap = black_kiwi_db_handler.GetCatMap()
 		defer black_kiwi_db_utils.ConnPool.Close()
 	}
 
@@ -132,7 +133,7 @@ func AdminRequired(c *gin.Context) {
 
 // UserRequired is a simple middleware to check the session
 func UserRequired(c *gin.Context) {
-	tokenStr := c.GetHeader("token")
+	tokenStr := c.GetHeader("X-API-KEY")
 
 	if tokenStr == "" {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Missing token"})

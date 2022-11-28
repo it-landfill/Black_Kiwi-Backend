@@ -21,9 +21,7 @@ INSERT INTO "black-kiwi_data"."Pois" (id, name, category, rank, geom) VALUES (DE
 func AddPOI(poi black_kiwi_data_structs.NewPoiItem) int  {
 	log.WithField("New POI", poi).Info("AddPOI query called")
 
-	catMap := black_kiwi_db_utils.GetIDFromCategory()
-
-	catID := (*catMap)[poi.Category]
+	catID := (*black_kiwi_db_utils.CatMap)[poi.Category]
 	var poiID int
 	err := black_kiwi_db_utils.ConnPool.QueryRow(context.Background(), "INSERT INTO \"black-kiwi_data\".\"Pois\" (id, name, category, rank, geom) VALUES (DEFAULT, $3, $4, $5, ST_SetSRID(ST_MakePoint($1, $2),4326)) RETURNING \"id\";", poi.Coord.Longitude, poi.Coord.Latitude, poi.Name, catID, poi.Rank).Scan(&poiID)
 	if err != nil {

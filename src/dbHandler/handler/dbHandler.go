@@ -7,6 +7,9 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	log "github.com/sirupsen/logrus"
+
+	black_kiwi_db_utils "ITLandfill/Black-Kiwi/dbHandler/utils"
+	"ITLandfill/Black-Kiwi/structs/data_structs"
 )
 
 //https://app.swaggerhub.com/apis/ITLandfill/Black-Kiwi/1.0.2
@@ -32,4 +35,12 @@ func InitConnectionPool() *pgxpool.Pool {
 	}
 
 	return conn
+}
+
+func GetCatMap() *map[black_kiwi_data_structs.Categories]int {
+	log.Info("GetCatMap query called")
+
+	catMap := black_kiwi_db_utils.GetIDFromCategory()
+
+	return catMap	
 }

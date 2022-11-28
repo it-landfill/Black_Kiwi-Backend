@@ -15,10 +15,9 @@ import (
 UPDATE "black-kiwi_data"."Pois" SET name = 'fwe', category = 4, rank = 3 WHERE id = 29
 */
 func EditPOI(poi black_kiwi_data_structs.PoiItem) bool  {
-	log.WithField("New POI", poi).Info("EditPOI query called")
+	log.WithField("Edited POI", poi).Info("EditPOI query called")
 
-	catMap := black_kiwi_db_utils.GetIDFromCategory()
-	catID := (*catMap)[poi.Category]
+	catID := (*black_kiwi_db_utils.CatMap)[poi.Category]
 
 	_, err := black_kiwi_db_utils.ConnPool.Exec(context.Background(), "UPDATE \"black-kiwi_data\".\"Pois\" SET name = $1, category = $2, rank = $3 WHERE id = $4;", poi.Name, catID, poi.Rank, poi.Id)
 	if err != nil {
@@ -26,7 +25,7 @@ func EditPOI(poi black_kiwi_data_structs.PoiItem) bool  {
 		return false
 	}
 
-	log.WithFields(log.Fields{"New POI": poi}).Debug("Exec succeeded while editing POI.")
+	log.WithFields(log.Fields{"Edited POI": poi}).Debug("Exec succeeded while editing POI.")
 
 	return true
 }
