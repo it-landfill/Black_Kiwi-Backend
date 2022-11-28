@@ -133,7 +133,7 @@ func AdminRequired(c *gin.Context) {
 
 // UserRequired is a simple middleware to check the session
 func UserRequired(c *gin.Context) {
-	tokenStr := c.GetHeader("token")
+	tokenStr := c.GetHeader("X-API-KEY")
 
 	if tokenStr == "" {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Missing token"})
