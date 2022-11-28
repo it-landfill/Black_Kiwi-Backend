@@ -83,5 +83,17 @@ func GetRecommendation(c *gin.Context) {
 		return
 	}
 
+	success = black_kiwi_mobile_queries.SaveRequest(minRank, latitude, longitude, category)
+
+	if !success {
+		log.WithFields(log.Fields{
+			"category":  category,
+			"minRank":   minRank,
+			"limit":     limit,
+			"latitude":  latitude,
+			"longitude": longitude,
+		}).Error("Error while saving request")
+	}
+
 	c.IndentedJSON(http.StatusOK, res)
 }

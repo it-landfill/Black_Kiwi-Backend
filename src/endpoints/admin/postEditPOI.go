@@ -34,7 +34,7 @@ func EditPOI(c *gin.Context) {
 	}
 
 	if !success {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error while deleting POI"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error while editing POI"})
 		return
 	}
 
