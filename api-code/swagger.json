@@ -2,14 +2,14 @@
   "openapi" : "3.0.0",
   "servers" : [ {
     "description" : "SwaggerHub API Auto Mocking",
-    "url" : "https://virtserver.swaggerhub.com/ITLandfill/Black-Kiwi/1.0.5"
+    "url" : "https://virtserver.swaggerhub.com/ITLandfill/Black-Kiwi/1.0.6"
   }, {
     "description" : "Black-Kiwi  servr",
     "url" : "http://casadiale.noip.me:62950"
   } ],
   "info" : {
     "description" : "API used for the Context Aware System course @ Università degli studi di Bologna a.a. 2021/2022.\nITLandfill group\n",
-    "version" : "1.0.5",
+    "version" : "1.0.6",
     "title" : "Black-Kiwi API",
     "contact" : {
       "email" : "alessandro.benetton@studio.unibo.it",
@@ -423,6 +423,67 @@
         "tags" : [ "administration" ]
       }
     },
+    "/admin/getClusteringLocations" : {
+      "get" : {
+        "summary" : "Return the location of the requests",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "nClusters",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "in" : "query",
+          "name" : "from",
+          "schema" : {
+            "type" : "string",
+            "format" : "date",
+            "example" : "2022-11-26"
+          }
+        }, {
+          "in" : "query",
+          "name" : "to",
+          "schema" : {
+            "type" : "string",
+            "format" : "date",
+            "example" : "2022-12-10"
+          }
+        }, {
+          "in" : "query",
+          "name" : "maxRadius",
+          "schema" : {
+            "type" : "number",
+            "format" : "float"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of all request locations with Cluster ID",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/RequestClusterInfo"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request."
+          },
+          "401" : {
+            "description" : "Authorization information is missing or invalid."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        },
+        "tags" : [ "administration" ]
+      }
+    },
     "/admin/getRequestQuartieri" : {
       "get" : {
         "summary" : "Return requests distribution based on quartieri.",
@@ -591,6 +652,28 @@
           "timestamp" : {
             "type" : "string",
             "format" : "date-time"
+          }
+        }
+      },
+      "RequestClusterInfo" : {
+        "type" : "object",
+        "required" : [ "name", "category", "coord", "cid" ],
+        "properties" : {
+          "category" : {
+            "$ref" : "#/components/schemas/Categories"
+          },
+          "coord" : {
+            "$ref" : "#/components/schemas/Coordinates"
+          },
+          "minRank" : {
+            "type" : "number"
+          },
+          "timestamp" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "cid" : {
+            "type" : "integer"
           }
         }
       },
