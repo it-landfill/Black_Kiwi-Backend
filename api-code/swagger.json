@@ -425,13 +425,14 @@
     },
     "/admin/getClusteringLocations" : {
       "get" : {
-        "summary" : "Return the location of the requests",
+        "summary" : "Return the location of the requests with the cluster ID",
         "parameters" : [ {
           "in" : "query",
           "name" : "nCluster",
           "required" : true,
           "schema" : {
-            "type" : "integer"
+            "type" : "integer",
+            "example" : 2
           }
         }, {
           "in" : "query",
@@ -454,7 +455,9 @@
           "name" : "maxRadius",
           "schema" : {
             "type" : "number",
-            "format" : "float"
+            "format" : "float",
+            "example" : 2.5,
+            "description" : "Distance from the center of the centroid"
           }
         } ],
         "responses" : {
@@ -672,7 +675,7 @@
             "type" : "string",
             "format" : "date-time"
           },
-          "cid" : {
+          "clusterID" : {
             "type" : "integer"
           }
         }
