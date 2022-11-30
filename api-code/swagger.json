@@ -428,7 +428,7 @@
         "summary" : "Return the location of the requests",
         "parameters" : [ {
           "in" : "query",
-          "name" : "nClusters",
+          "name" : "nCluster",
           "required" : true,
           "schema" : {
             "type" : "integer"
