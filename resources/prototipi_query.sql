@@ -38,4 +38,5 @@ FROM (SELECT quartieri.nomequart as name, quartieri.geom, count(poi.id) as value
 
 
 -- Clustering spaziale
--- TODO
+SELECT req.id, req.timestamp, req.rank, req.category, req.geom, st_clusterkmeans(req.geom, 2) OVER() as cid
+FROM "black-kiwi_data"."Requests" as req;
