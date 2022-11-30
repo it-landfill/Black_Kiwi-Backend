@@ -83,6 +83,7 @@ func createEngine() *gin.Engine {
 	admin.DELETE("/deletePOI", black_kiwi_admin.DeletePOI)
 	// Data analytics
 	admin.GET("/getRequestLocations", black_kiwi_admin.GetRequestLocations)
+	admin.GET("/getClusteringLocations", black_kiwi_admin.GetClusterLocations)
 	admin.GET("/getPOIQuartieri", black_kiwi_admin.GetPOIQuartieri)
 	admin.GET("/getRequestQuartieri", black_kiwi_admin.GetRequestQuartieri)
 	admin.GET("/getQuartieri", black_kiwi_admin.GetQuartieri)
