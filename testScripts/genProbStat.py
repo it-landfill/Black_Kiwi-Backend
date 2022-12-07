@@ -20,8 +20,8 @@ def generateTriangularNoise(location, radius, min, mode, max, repeat):
         randomRadius = radiusCalibration(radius, max, np.random.triangular(min, mode, max))
         randomAngle = random() * 2 * pi
         # Convert polar to cartesian
-        x = randomRadius * cos(randomAngle)
-        y = randomRadius * sin(randomAngle)
+        x = kilometersToDegreesLatitude(randomRadius * cos(randomAngle))
+        y = kilometersToDegreesLongitude(randomRadius * sin(randomAngle), x)
         # Add the location
         x += location[0]
         y += location[1]
@@ -41,8 +41,8 @@ def generateGaussianNoise(location, radius, mean, standardDeviation, repeat):
         randomRadius = radiusCalibration(radius, mean + 3 * standardDeviation, abs(np.random.normal(mean, standardDeviation)))
         randomAngle = random() * 2 * pi
         # Convert polar to cartesian
-        x = randomRadius * cos(randomAngle)
-        y = randomRadius * sin(randomAngle)
+        x = kilometersToDegreesLatitude(randomRadius * cos(randomAngle))
+        y = kilometersToDegreesLongitude(randomRadius * sin(randomAngle), x)
         # Add the location
         x += location[0]
         y += location[1]
@@ -67,8 +67,8 @@ def generatePoissonNoise(location, radius, poissLambda, repeat):
         randomRadius = radiusCalibration(radius, poissLambda + (3 * sqrt(poissLambda)), k - 1)
         randomAngle = random() * 2 * pi
         # Convert polar to cartesian
-        x = randomRadius * cos(randomAngle)
-        y = randomRadius * sin(randomAngle)
+        x = kilometersToDegreesLatitude(randomRadius * cos(randomAngle))
+        y = kilometersToDegreesLongitude(randomRadius * sin(randomAngle), x)
         # Add the location
         x += location[0]
         y += location[1]
@@ -86,8 +86,8 @@ def generateUniformNoise(location, radius, repeat):
         randomRadius = random() * radius
         randomAngle = random() * 2 * pi
         # Convert polar to cartesian
-        x = randomRadius * cos(randomAngle)
-        y = randomRadius * sin(randomAngle)
+        x = kilometersToDegreesLatitude(randomRadius * cos(randomAngle))
+        y = kilometersToDegreesLongitude(randomRadius * sin(randomAngle), x)
         # Add the location
         x += location[0]
         y += location[1]
@@ -129,6 +129,16 @@ def plot():
     plt.xlabel('Longitude')
     plt.ylabel('Latitude')
     plt.show()
+
+
+# Funzione che permette di trasformare da kilometri a gradi (da applicare alla latitudine)
+def kilometersToDegreesLatitude(km):
+    return km / 111.111
+
+
+# Funzione che permette di trasformare da kilometri a gradi (da applicare alla longitudine)
+def kilometersToDegreesLongitude(km, latitude):
+    return km / (111.111 * cos(latitude * pi / 180))
 
 
 if __name__ == '__main__':

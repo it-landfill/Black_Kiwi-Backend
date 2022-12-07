@@ -39,7 +39,7 @@ def generate_random_geoJSON_point(center, radius, repeat):
             {
                 "type": "Feature",
                 "geometry": {"type": "Point", "coordinates": location},
-                "properties": {"id": i},
+                "properties": {"id": i, "marker-color": "#00f"},
             }
         )
 
@@ -54,13 +54,27 @@ def update_nearest_poi(positions, pois):
 
     return positions
 
+def set_point_color(features, color_str):
+    for feature in features["features"]:
+        feature["properties"]["marker-color"] = color_str
+
+    return features
+
+def join_geoJSON(data1, data2):
+    return {"type": "FeatureCollection", "features": data1["features"] + data2["features"]}
+
 
 if __name__ == "__main__":
-    pois = load_geoJSON("geoJSON/poi_list_complete.geojson")
+    pois = load_geoJSON("data/poi_list.geojson")
+    pois = set_point_color(pois, "#0f0")
     #print(pois)
     #save_geoJSON("data/poi_list.geojson",pois)
     #print(get_closest([11.356172561645508, 44.4977297671644], pois))
 
-    data = generate_random_geoJSON_point([11.343083, 44.494332], 0.05, 5)
+    data = generate_random_geoJSON_point([11.343083, 44.494332], 5, 100)
+    #print(data)
     data = update_nearest_poi(data, pois)
-    save_geoJSON("data/random.geojson", data)
+    save_geoJSON("data/randwrefwrdom.geojson", data)
+
+    save_geoJSON("data/locAndPois.geojson",join_geoJSON(data, pois))
+    
