@@ -11,9 +11,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "department",
-				"name": "Dip di Ingegneria Lazzaretto"
+				"name": "Dip di Ingegneria Lazzaretto",
+				"rank": 6
 			}
 		},
 		{
@@ -26,9 +26,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "department",
-				"name": "Dip di Ingegneria"
+				"name": "Dip di Ingegneria",
+				"rank": 7
 			}
 		},
 		{
@@ -41,9 +41,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "department",
-				"name": "Dip di Informatica"
+				"name": "Dip di Informatica",
+				"rank": 3
 			}
 		},
 		{
@@ -56,9 +56,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "department",
-				"name": "Dip di Storia"
+				"name": "Dip di Storia",
+				"rank": 0
 			}
 		},
 		{
@@ -71,9 +71,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "department",
-				"name": "Policlinico universitario S. Orsola"
+				"name": "Policlinico universitario S. Orsola",
+				"rank": 9
 			}
 		},
 		{
@@ -86,9 +86,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "historical building",
-				"name": "Palazzo Re Enzo"
+				"name": "Palazzo Re Enzo",
+				"rank": 9
 			}
 		},
 		{
@@ -101,9 +101,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "historical building",
-				"name": "Chiesa di Santo Stefano"
+				"name": "Chiesa di Santo Stefano",
+				"rank": 5
 			}
 		},
 		{
@@ -116,9 +116,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "historical building",
-				"name": "Santuario di San Luca"
+				"name": "Santuario di San Luca",
+				"rank": 4
 			}
 		},
 		{
@@ -131,9 +131,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "historical building",
-				"name": "Palazzo Poggi"
+				"name": "Palazzo Poggi",
+				"rank": 3
 			}
 		},
 		{
@@ -146,9 +146,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "museum",
-				"name": "Museo di Ustica"
+				"name": "Museo di Ustica",
+				"rank": 6
 			}
 		},
 		{
@@ -161,9 +161,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "museum",
-				"name": "Museo Medievale"
+				"name": "Museo Medievale",
+				"rank": 8
 			}
 		},
 		{
@@ -176,9 +176,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "museum",
-				"name": "MAMBO"
+				"name": "MAMBO",
+				"rank": 4
 			}
 		},
 		{
@@ -191,9 +191,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "museum",
-				"name": "Museo della Tappezzeria"
+				"name": "Museo della Tappezzeria",
+				"rank": 10
 			}
 		},
 		{
@@ -206,9 +206,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "museum",
-				"name": "Casa Museo Carducci"
+				"name": "Casa Museo Carducci",
+				"rank": 7
 			}
 		},
 		{
@@ -221,9 +221,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "park",
-				"name": "Giardini Margherita"
+				"name": "Giardini Margherita",
+				"rank": 6
 			}
 		},
 		{
@@ -236,9 +236,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "park",
-				"name": "Villa Angeletti"
+				"name": "Villa Angeletti",
+				"rank": 0
 			}
 		},
 		{
@@ -251,9 +251,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "park",
-				"name": "Arena Parco Nord"
+				"name": "Arena Parco Nord",
+				"rank": 7
 			}
 		},
 		{
@@ -266,9 +266,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "park",
-				"name": "Parco Della Montagnola"
+				"name": "Parco Della Montagnola",
+				"rank": 5
 			}
 		},
 		{
@@ -281,9 +281,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "park",
-				"name": "Parco Villa Ghigi"
+				"name": "Parco Villa Ghigi",
+				"rank": 5
 			}
 		},
 		{
@@ -296,9 +296,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "park",
-				"name": "Parco Talon"
+				"name": "Parco Talon",
+				"rank": 5
 			}
 		},
 		{
@@ -311,9 +311,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "park",
-				"name": "Parco dei Cedri"
+				"name": "Parco dei Cedri",
+				"rank": 0
 			}
 		},
 		{
@@ -326,9 +326,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "theater",
-				"name": "Teatro di Villa Aldrovandi"
+				"name": "Teatro di Villa Aldrovandi",
+				"rank": 6
 			}
 		},
 		{
@@ -341,9 +341,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "theater",
-				"name": "Teatro Europa"
+				"name": "Teatro Europa",
+				"rank": 2
 			}
 		},
 		{
@@ -356,9 +356,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "theater",
-				"name": "Teatro Duse"
+				"name": "Teatro Duse",
+				"rank": 3
 			}
 		},
 		{
@@ -371,9 +371,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "theater",
-				"name": "Teatro Arena Del Sole"
+				"name": "Teatro Arena Del Sole",
+				"rank": 4
 			}
 		},
 		{
@@ -386,9 +386,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "theater",
-				"name": "Teatro Testoni"
+				"name": "Teatro Testoni",
+				"rank": 4
 			}
 		},
 		{
@@ -401,9 +401,9 @@
 				]
 			},
 			"properties": {
-				"marker-color": "#0f0",
 				"type": "theater",
-				"name": "Teatro Delle Celebrazioni"
+				"name": "Teatro Delle Celebrazioni",
+				"rank": 6
 			}
 		}
 	]
