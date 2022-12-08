@@ -1,115 +1,56 @@
 import geopy.distance
-import geojson
+import json
 from genProbStat import generateUniformNoise
 import numpy as np
 import random
+import pandas as pd
+import geoJSON_utils
 
-def save_geoJSON(path, data):
+def load_df(path):
+    return pd.read_csv(path, index_col=0)
+
+def save_df(path, data):
+    data.to_csv(path, index=True)
+
+def save_json(path, data):
     with open(path, "w") as f:
-        geojson.dump(data, f)
+        json.dump(data, f)
 
-
-def load_geoJSON(path):
+def load_json(path):
     with open(path, "r") as f:
-        return geojson.load(f)
-
+        return json.load(f)
 
 def get_distance(coords_1, coords_2):
     return geopy.distance.geodesic(coords_1, coords_2).m
 
+def get_closest(coords, pois):
+    min_dist = get_distance(coords["coordinates"], pois[0]["coordinates"])
+    min_poi  = pois[0]
 
-def get_closest(coords, data):
-    min_dist = get_distance(coords, data["features"][0]["geometry"]["coordinates"])
-    closest = 0
-
-    for i, poi in enumerate(data["features"]):
-        dist = get_distance(coords, poi["geometry"]["coordinates"])
-        # print(f"{i} - {dist}")
+    for poi in pois:
+        dist = get_distance(coords["coordinates"], poi["coordinates"])
         if dist < min_dist:
             min_dist = dist
-            closest = i
+            min_poi = poi
 
-    return closest, data[closest], min_dist
-
-def generate_random_geoJSON_point(center, radius, repeat):
-    locations = generateUniformNoise(center, radius, repeat)
-
-    features = {"type": "FeatureCollection", "features": []}
-
-    for i, location in enumerate(locations):
-        features["features"].append(
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": location},
-                "properties": {"id": i, "marker-color": "#00f"},
-            }
-        )
-
-    return features
-
-def update_nearest_poi(positions, pois):
-
-    for coord in positions["features"]:
-        _, closest, dist = get_closest(coord["geometry"]["coordinates"], pois)
-        coord["properties"]["nearest_poi"] = closest
-        coord["properties"]["distance"] = dist
-
-    return positions
-
-def set_point_color(features, color_str):
-    for feature in features["features"]:
-        feature["properties"]["marker-color"] = color_str
-
-    return features
-
-def join_geoJSON(data1, data2):
-    return {"type": "FeatureCollection", "features": data1["features"] + data2["features"]}
+    return min_poi
 
 def privacy_preservation(real_pos_list, fake_pos_list):
     posLen = min(len(real_pos_list), len(fake_pos_list))
-    tmpList = [get_distance(real_pos_list[x]["geometry"]["coordinates"], fake_pos_list[x]["geometry"]["coordinates"],) for x in range(posLen)]
-    print(tmpList)
-    return np.square(tmpList).mean()
+    tmpList = [get_distance(real_pos_list[x]["coordinates"], fake_pos_list[x]["coordinates"],) for x in range(posLen)]
+    return tmpList
 
 def quality_of_service(real_pos_list, fake_pos_list):
     posLen = min(len(real_pos_list), len(fake_pos_list))
-    tmpList = [real_pos_list[x]["properties"]["nearest_poi"]["properties"]["rank"]-fake_pos_list[x]["properties"]["nearest_poi"]["properties"]["rank"] for x in range(posLen)]
-    print(tmpList)
-    return np.square(tmpList).mean()
+    tmpList = [real_pos_list[x]["poiRank"]-fake_pos_list[x]["poiRank"] for x in range(posLen)]
+    return np.square(tmpList)
+
 
 if __name__ == "__main__":
-    pois = load_geoJSON("data/poi_list.geojson")
-    pois = set_point_color(pois, "#0f0")
-    #print(pois)
-    #save_geoJSON("data/poi_list.geojson",pois)
-    #print(get_closest([11.356172561645508, 44.4977297671644], pois))
+    true_pos = load_json("data/true_pos.json")
+    fake_pos = load_json("data/fake_uniform.json")
+    #print(privacy_preservation(true_pos, fake_pos))
+    print(np.square(quality_of_service(true_pos, fake_pos)).mean())
 
-    #positions = generate_random_geoJSON_point([11.343083, 44.494332], 5, 50)
-    positions = load_geoJSON("data/positions.geojson")
-    positions = set_point_color(positions, "#00f")
-    #print(positions)
-    #positions = update_nearest_poi(positions, pois)
-    #save_geoJSON("data/positions.geojson", positions)
-    #save_geoJSON("data/locAndPois.geojson",join_geoJSON(positions, pois))
-    fake_positions = {"type": "FeatureCollection", "features": []}
 
-    for i, location in enumerate(positions["features"]):
-        fake_pos = generateUniformNoise(location["geometry"]["coordinates"], 2, 1)
-        fake_positions["features"].append(
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": fake_pos[0]},
-                "properties": {"id": i, "type": "fake"},
-            }
-        )
-    fake_positions = update_nearest_poi(fake_positions, pois)
-    fake_positions = set_point_color(fake_positions, "#f00")
-
-    save_geoJSON("data/testData/group1/truePositions.geojson", positions)
-    save_geoJSON("data/testData/group1/fakePositions.geojson", fake_positions)
-    #save_geoJSON("data/trueFake.geojson", join_geoJSON(join_geoJSON(positions, pois), fake_positions))
-    #print("PP\n")
-    #print(privacy_preservation(positions["features"], fake_positions["features"]))
-    #print("\nQOS\n")
-    #print(quality_of_service(positions["features"], fake_positions["features"]))
     

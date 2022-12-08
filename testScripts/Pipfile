@@ -8,6 +8,8 @@ geopy = "*"
 geojson = "*"
 matplotlib = "*"
 numpy = "*"
+seaborn = "*"
+pandas = "*"
 
 [dev-packages]
 
