@@ -102,6 +102,9 @@ def centroidCalculation(locations, firstNElements = 0):
     x, y = zip(*locations)
     return (sum(x[:firstNElements]) / firstNElements, sum(y[:firstNElements]) / firstNElements)
 
+def centroidCalculationAll(locations):
+    x, y = zip(*locations)
+    return (sum(x) / len(locations), sum(y) / len(locations))
 
 def plot():
     # Number of points
