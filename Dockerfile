@@ -15,5 +15,5 @@ EXPOSE 8080
 
 CMD ["./main"]
 
-# docker build -t aleben/itlandfill-cas-go_api:latest -t aleben/itlandfill-cas-go_api:1.8 .
+# docker build -t aleben/itlandfill-cas-go_api:latest -t aleben/itlandfill-cas-go_api:1.9 .
 # docker push aleben/itlandfill-cas-go_api --all-tags

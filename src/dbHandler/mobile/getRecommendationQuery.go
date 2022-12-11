@@ -16,7 +16,7 @@ import (
 SELECT poi.id, poi.name, poi.rank, cat.name, st_asgeojson(poi.geom) as coordinates, st_distance(poi.geom, st_geogfromtext('POINT(11.3428 44.4939)')) as meters
 FROM "black-kiwi_data"."Pois" as poi
 JOIN "black-kiwi_data"."Categories" as cat on poi.category = cat.id
-WHERE cat.name = 'Park' and poi.rank<0
+WHERE cat.name = 'Park' and poi.rank>=0
 ORDER BY meters;
 */
 func GetRecommendation(minRank float64, lat float64, lon float64, category string, limit int) (success bool, poiList []black_kiwi_data_structs.PoiItem) {
