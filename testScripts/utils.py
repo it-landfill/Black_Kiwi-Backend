@@ -35,9 +35,13 @@ def get_closest(coords, pois):
 
     return min_poi
 
-def privacy_preservation(real_pos_list, fake_pos_list):
+def privacy_preservation_obj(real_pos_list, fake_pos_list):
     posLen = min(len(real_pos_list), len(fake_pos_list))
     tmpList = [get_distance(real_pos_list[x]["coordinates"], fake_pos_list[x]["coordinates"],) for x in range(posLen)]
+    return tmpList
+
+def privacy_preservation_arr(real_pos, fake_pos_list):
+    tmpList = [get_distance(real_pos, fake_pos) for fake_pos in fake_pos_list]
     return tmpList
 
 def quality_of_service(real_pos_list, fake_pos_list):

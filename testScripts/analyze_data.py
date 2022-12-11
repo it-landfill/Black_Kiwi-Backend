@@ -43,8 +43,14 @@ def analyze_radius():
 	sns.despine(offset=10, trim=True)
 	plt.show(block=True)
 
+def analyze_dummies():
+	pp = utils.load_df("data/var_dummies_pp.csv")
+
+	sns.lineplot(data=pp, x="dummies", y="value", hue="type").set(title='Privacy Preservation')
+	sns.despine(offset=10, trim=True)
+	plt.show(block=True)
 
 if __name__ == "__main__":
 	#analyze_params()
-	analyze_radius()
-	
+	#analyze_radius()
+	analyze_dummies()	
