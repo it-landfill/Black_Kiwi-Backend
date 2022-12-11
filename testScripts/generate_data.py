@@ -2,6 +2,7 @@ import utils
 import genProbStat
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 
 def update_closest(pos, poi_list):
     closest = utils.get_closest({"coordinates": pos}, poi_list)
@@ -104,14 +105,15 @@ def var_dummies_data(n, radius):
     gau = generate_pos(n, center, radius, gaussian, None, True)
     tri = generate_pos(n, center, radius, triangular, None, True)
 
-    for dummies in range(1, n+1):
-
+    pbar = tqdm(range(1, n+1))
+    for dummies in pbar:
         uni_centroid = []
         poi_centroid = []
         gau_centroid = []
         tri_centroid = []
 
         for i in range(0, n-dummies+1):
+            pbar.set_description(f"Calculating dummies. Window size {i+dummies}")
             uni_centroid.append(genProbStat.centroidCalculationAll(uni[i:i+dummies]))
             poi_centroid.append(genProbStat.centroidCalculationAll(poi[i:i+dummies]))
             gau_centroid.append(genProbStat.centroidCalculationAll(gau[i:i+dummies]))
